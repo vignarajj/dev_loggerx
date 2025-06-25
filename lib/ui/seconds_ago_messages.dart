@@ -1,5 +1,6 @@
 import 'package:timeago/timeago.dart' as timeago;
 
+/// Custom timeago messages for seconds/minutes/hours ago formatting.
 class SecondsAgoMessages implements timeago.LookupMessages {
   @override
   String prefixAgo() => '';
@@ -50,10 +51,12 @@ class SecondsAgoMessages implements timeago.LookupMessages {
   String wordSeparator() => ' ';
 }
 
+/// Registers the custom timeago locale for seconds/minutes/hours.
 void registerTimeagoLocale() {
   timeago.setLocaleMessages('en_seconds', SecondsAgoMessages());
 }
 
+/// Formats a timestamp using the custom timeago locale.
 String formatTimestamp(DateTime dt) {
   return timeago.format(dt, locale: 'en_seconds', allowFromNow: true);
 }

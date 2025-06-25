@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'generic_log_card.dart';
 import 'api_log_card.dart';
 
+/// List view for displaying a list of log entries (generic or API).
+///
+/// Handles highlighting for search matches and delegates to the correct card widget.
 class LogListView extends StatelessWidget {
   final List<DevLogModel> logs;
   final List<int>? highlightIndices;
@@ -18,6 +21,7 @@ class LogListView extends StatelessWidget {
     super.key,
   });
 
+  /// Builds the log list view UI.
   @override
   Widget build(BuildContext context) {
     if (logs.isEmpty) {

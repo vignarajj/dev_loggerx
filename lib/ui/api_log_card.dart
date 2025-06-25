@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'seconds_ago_messages.dart';
 
+/// Card widget for displaying an API log entry with expandable details.
+///
+/// Shows method, URL, status, timings, headers, and response. Supports copy on long-press.
 class ApiLogCard extends StatefulWidget {
   final ApiLogModel apiLog;
   final bool isHighlighted;
@@ -19,10 +22,12 @@ class ApiLogCard extends StatefulWidget {
   State<ApiLogCard> createState() => ApiLogCardState();
 }
 
+/// State for [ApiLogCard]. Handles expansion and animation.
 class ApiLogCardState extends State<ApiLogCard>
     with SingleTickerProviderStateMixin {
   bool _expanded = false;
 
+  /// Builds the API log card UI.
   @override
   Widget build(BuildContext context) {
     final log = widget.apiLog;

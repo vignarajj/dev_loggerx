@@ -2,6 +2,9 @@ import 'package:hive/hive.dart';
 import 'dev_log_model.dart';
 part 'api_log_model.g.dart';
 
+/// Model for API log entries (request/response).
+///
+/// Extends [DevLogModel] and adds method, url, headers, body, statusCode, timings, and memoryUsage.
 @HiveType(typeId: 2)
 class ApiLogModel extends DevLogModel {
   @HiveField(5)

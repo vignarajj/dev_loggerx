@@ -124,6 +124,8 @@ class _LongPressDetector extends StatelessWidget {
 }
 
 /// Public API for logging from outside the plugin.
+///
+/// Use [Logger.debug], [Logger.info], [Logger.error], and [Logger.api] to log messages and API calls.
 class Logger {
   /// Initializes the logger. Call this in your app's main() or before using any logging.
   static void init(LoggerConfig config) => LoggerCore.init(config);

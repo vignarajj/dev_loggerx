@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dev_loggerx/dev_loggerx.dart';
 import 'package:dev_loggerx/models/api_log_model.dart';
+import 'package:dev_loggerx/models/debug_log_model.dart';
 import 'package:dev_loggerx/models/dev_log_model.dart';
 import 'package:dev_loggerx/models/log_enums.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -19,7 +20,12 @@ import 'log_list_view.dart';
 import 'seconds_ago_messages.dart';
 import 'segmented_tab_bar.dart';
 import 'settings_detail_page.dart';
+import 'floating_rounded_app_bar.dart';
 
+/// Overlay screen for viewing, searching, and filtering logs in-app.
+///
+/// Displays segmented tabs for All, Debug, Logs, and API logs, with search,
+/// filter, export, and settings. Used as the main overlay UI for DevLoggerX.
 class LoggerOverlayScreen extends ConsumerStatefulWidget {
   const LoggerOverlayScreen({super.key});
 
@@ -28,6 +34,7 @@ class LoggerOverlayScreen extends ConsumerStatefulWidget {
       _LoggerOverlayScreenState();
 }
 
+/// State for [LoggerOverlayScreen]. Handles tab selection, search, filtering, and log export.
 class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
   int _selectedIndex = 0;
   final List<String> _tabs = ['All', 'Debug', 'Logs', 'API'];
@@ -41,12 +48,17 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
   final GlobalKey<NavigatorState> _overlayNavigatorKey =
       GlobalKey<NavigatorState>();
 
+  // Debug filter state
+  String _debugFilter = 'All';
+  final List<String> _debugFilters = ['All', 'Info', 'Warning', 'Error'];
+
   @override
   void initState() {
     super.initState();
     registerTimeagoLocale();
   }
 
+  /// Called when the search text changes. Updates search matches and highlights.
   void _onSearchChanged(String v, List<DevLogModel> logs) {
     setState(() {
       _search = v;
@@ -63,6 +75,7 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
     });
   }
 
+  /// Navigate to the previous search match.
   void _goToPrevMatch() {
     setState(() {
       if (_searchMatches.isNotEmpty) {
@@ -72,6 +85,7 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
     });
   }
 
+  /// Navigate to the next search match.
   void _goToNextMatch() {
     setState(() {
       if (_searchMatches.isNotEmpty) {
@@ -80,6 +94,7 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
     });
   }
 
+  /// Show the settings page with device/app info and log sharing.
   void _showSettingsPage(BuildContext context) async {
     final deviceInfo = DeviceInfoPlugin();
     final packageInfo = await PackageInfo.fromPlatform();
@@ -148,6 +163,7 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
     }
   }
 
+  /// Show the share dialog and export logs.
   Future<void> _showShareDialogAndShare() async {
     print("clicked share logs");
     final logTypes = ['All', 'Debug', 'Logs', 'API'];
@@ -216,6 +232,7 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
     );
   }
 
+  /// Share logs with device info, filtered by log type.
   Future<void> _shareLogsWithDeviceInfo(BuildContext context,
       {int filterIndex = 0}) async {
     final logs = ref.read(loggerProvider);
@@ -339,9 +356,20 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
     final apiLogs =
         sortedLogs.where((l) => l.type == DevLogType.api.name).toList();
 
+    // Apply debug filter
+    List<DevLogModel> filteredDebugLogs = debugLogs;
+    if (_debugFilter != 'All') {
+      filteredDebugLogs = debugLogs.where((log) {
+        if (log is DebugLogModel) {
+          return log.level.toLowerCase() == _debugFilter.toLowerCase();
+        }
+        return false;
+      }).toList();
+    }
+
     List<List<DevLogModel>> logViews = [
       sortedLogs,
-      debugLogs,
+      filteredDebugLogs,
       logLogs,
       apiLogs,
     ];
@@ -355,7 +383,11 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
         .toList();
 
     return MaterialApp(
-      theme: ThemeData.dark(),
+      theme: ThemeData.dark().copyWith(
+        textTheme: ThemeData.dark().textTheme.apply(
+          fontFamily: 'RobotoMono', // Use a monospaced font
+        ),
+      ),
       scaffoldMessengerKey: _scaffoldMessengerKey,
       navigatorKey: _overlayNavigatorKey,
       home: PopScope(
@@ -364,91 +396,129 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
           if (nav != null && nav.canPop()) {
             nav.pop();
           } else {
-            LoggerCore.hideOverlay();
+            // LoggerCore.hideOverlay();
           }
         },
         canPop: false,
         child: Scaffold(
           backgroundColor: Colors.black,
-          appBar: AppBar(
-            title: _showSearch
-                ? Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _searchController,
-                          autofocus: true,
-                          style: const TextStyle(color: Colors.white),
-                          decoration: const InputDecoration(
-                            hintText: 'Search logs...',
-                            hintStyle: TextStyle(color: Colors.white54),
-                            border: InputBorder.none,
-                          ),
-                          onChanged: (v) => _onSearchChanged(v, sortedLogs),
-                        ),
-                      ),
-                      if (_searchMatches.isNotEmpty)
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.arrow_upward,
-                                  color: Colors.white),
-                              onPressed: _goToPrevMatch,
-                            ),
-                            Text(
-                              '${_searchMatches.isEmpty ? 0 : _searchIndex + 1}/${_searchMatches.length}',
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.arrow_downward,
-                                  color: Colors.white),
-                              onPressed: _goToNextMatch,
-                            ),
-                          ],
-                        ),
-                    ],
-                  )
-                : const Text(
-                    'Dev Logger',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-            backgroundColor: Colors.grey[900],
-            actions: [
-              if (!_showSearch)
-                IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () => setState(() => _showSearch = true),
-                  tooltip: 'Search',
-                ),
-              if (_showSearch)
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () {
-                    setState(() {
-                      _showSearch = false;
-                      _search = '';
-                      _searchController.clear();
-                      _searchMatches = [];
-                      _searchIndex = 0;
-                    });
-                  },
-                  tooltip: 'Close search',
-                ),
-              IconButton(
-                icon: const Icon(Icons.settings),
-                onPressed: () => _showSettingsPage(context),
-                tooltip: 'Settings',
-              ),
-            ],
-          ),
           body: Column(
             children: [
+              FloatingRoundedAppBar(
+                title: _showSearch
+                    ? Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _searchController,
+                              autofocus: true,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: const InputDecoration(
+                                hintText: 'Search logs...',
+                                hintStyle: TextStyle(color: Colors.white54),
+                                border: InputBorder.none,
+                              ),
+                              onChanged: (v) => _onSearchChanged(v, sortedLogs),
+                            ),
+                          ),
+                          if (_searchMatches.isNotEmpty)
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.arrow_upward,
+                                      color: Colors.white),
+                                  onPressed: _goToPrevMatch,
+                                ),
+                                Text(
+                                  '${_searchMatches.isEmpty ? 0 : _searchIndex + 1}/${_searchMatches.length}',
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.arrow_downward,
+                                      color: Colors.white),
+                                  onPressed: _goToNextMatch,
+                                ),
+                              ],
+                            ),
+                        ],
+                      )
+                    : const Text(
+                        'Dev Logger',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                      ),
+                actions: [
+                  if (!_showSearch)
+                    IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: () => setState(() => _showSearch = true),
+                      tooltip: 'Search',
+                    ),
+                  if (_showSearch)
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        setState(() {
+                          _showSearch = false;
+                          _search = '';
+                          _searchController.clear();
+                          _searchMatches = [];
+                          _searchIndex = 0;
+                        });
+                      },
+                      tooltip: 'Close search',
+                    ),
+                  IconButton(
+                    icon: const Icon(Icons.settings),
+                    onPressed: () => _showSettingsPage(context),
+                    tooltip: 'Settings',
+                  ),
+                ],
+              ),
               const SizedBox(height: 8),
               SegmentedTabBar(
                 tabs: _tabs,
                 selectedIndex: _selectedIndex,
                 onTabSelected: (i) => setState(() => _selectedIndex = i),
               ),
+              // Debug filter row
+              if (_selectedIndex == 1)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: _debugFilters.map((filter) {
+                      final selected = _debugFilter == filter;
+                      Color color;
+                      switch (filter) {
+                        case 'Info':
+                          color = Colors.blueAccent;
+                          break;
+                        case 'Warning':
+                          color = Colors.orangeAccent;
+                          break;
+                        case 'Error':
+                          color = Colors.redAccent;
+                          break;
+                        default:
+                          color = Colors.grey;
+                      }
+                      return ChoiceChip(
+                        label: Text(filter, style: TextStyle(fontFamily: 'RobotoMono')),
+                        selected: selected,
+                        selectedColor: color.withAlpha(2),
+                        backgroundColor: Colors.grey[850],
+                        labelStyle: TextStyle(
+                          color: selected ? color : Colors.white70,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'RobotoMono',
+                        ),
+                        onSelected: (_) {
+                          setState(() => _debugFilter = filter);
+                        },
+                      );
+                    }).toList(),
+                  ),
+                ),
               const SizedBox(height: 8),
               Expanded(
                 child: IndexedStack(

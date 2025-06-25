@@ -7,14 +7,17 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 import 'package:dev_loggerx/models/log_enums.dart';
 
+/// Riverpod provider for the logger service (log state management).
 final loggerProvider = NotifierProvider<LoggerService, List<DevLogModel>>(
   LoggerService.new,
 );
 
+/// Service for managing logs (add, clear, persist) using Riverpod state.
 class LoggerService extends Notifier<List<DevLogModel>> {
   static const _boxName = 'logger_logs';
   static bool _hiveInitialized = false;
 
+  /// Initialize Hive persistence if enabled in config.
   static Future<void> initPersistenceIfNeeded(LoggerConfig config) async {
     if (config.enablePersistence && !_hiveInitialized) {
       await Hive.initFlutter();
@@ -40,6 +43,7 @@ class LoggerService extends Notifier<List<DevLogModel>> {
     return [];
   }
 
+  /// Add a debug log entry.
   void addDebugLog({
     required String heading,
     required String content,
@@ -55,6 +59,7 @@ class LoggerService extends Notifier<List<DevLogModel>> {
     state = [...state, log];
   }
 
+  /// Add a generic log entry.
   void addLog({
     required String heading,
     required String content,

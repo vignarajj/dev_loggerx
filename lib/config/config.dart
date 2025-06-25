@@ -1,10 +1,8 @@
 // Config layer for Logger plugin
 
-/// Logger configuration model.
+/// Logger configuration model for DevLoggerX.
 ///
-/// This config is now held in a [ValueNotifier] in [LoggerCore.config],
-/// and can be updated at runtime using [LoggerCore.updateConfig].
-/// Always read config values via `LoggerCore.config.value` for reactivity.
+/// Holds all runtime config options for the logger overlay and persistence.
 class LoggerConfig {
   /// Enable logger in debug mode (default: true)
   final bool enableInDebug;

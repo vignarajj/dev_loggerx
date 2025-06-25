@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'logger_service.dart';
 
+/// HTTP client wrapper for logging API requests and responses to DevLoggerX.
 class LoggerHttp extends http.BaseClient {
   final http.Client _inner;
   final WidgetRef ref;

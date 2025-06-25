@@ -16,16 +16,19 @@ and the Flutter guide for
 A developer-friendly Flutter plugin to capture, view, and manage logs inside your app. Supports Debug, Logs, and API logs. Inspired by cr_logger, always in dark mode, and built with Riverpod.
 
 ## Features
-- Categorized log display: **All, Debug, Logs, API** (segmented tabs)
-- Expandable API log cards with details
-- Powerful search and filter (with match navigation)
-- Export logs (JSON or plain text) with filters
-- Share logs (with device/app info) via bottom sheet
-- Settings page: view device/app info, share logs, clear logs
-- Integrates with Dio and http clients
-- Built with Riverpod for robust state management
-- Modern dark overlay UI, always accessible
-- Compatible with Android, iOS, and Web
+- **Floating, rounded app bar**: Modern, elevated app bar that appears to float at the top of the overlay and settings screens.
+- **Segmented tab navigation**: Switch between All, Debug, Logs, and API logs with a single tap.
+- **Debug log filtering**: Filter debug logs by Info, Warning, or Error with color-coded chips.
+- **Monospaced font throughout**: All text uses a coding-style monospaced font for clarity and consistency.
+- **Expandable API log cards**: View detailed request/response info, headers, timings, and more.
+- **Powerful search and filter**: Search logs with match navigation and highlighting.
+- **Export and share logs**: Export logs as JSON or text, share with device/app info, or clear logs.
+- **Settings page**: View device/app info, share logs, and clear logs from a dedicated settings screen.
+- **Dio and http integration**: Automatically log API calls from Dio and http clients.
+- **Riverpod state management**: Robust, testable log state management.
+- **Modular, documented code**: All classes, widgets, and services are split into files and fully documented with Dart doc comments.
+- **Modern dark overlay UI**: Always accessible, beautiful, and easy to use.
+- **Compatible with Android, iOS, and Web**
 
 ## Getting Started
 
@@ -40,9 +43,9 @@ dependencies:
 import 'package:dev_loggerx/dev_loggerx.dart';
 
 void main() {
-  Logger.init(const DevLoggerConfig(
+  Logger.init(const LoggerConfig(
     enableInDebug: true,
-    allowedEmails: ['dev@company.com'],
+    allowedIds: ['dev@company.com'],
     enableLongPressGesture: true,
   ));
   runApp(MyApp());
@@ -53,7 +56,7 @@ void main() {
 ```dart
 @override
 Widget build(BuildContext context) {
-  DevLogger.attachGlobalLongPress(context, userEmail: currentUserEmail);
+  LoggerCore.attachLongPress(context, userId: currentUserEmail);
   return MaterialApp(...);
 }
 ```
@@ -62,73 +65,29 @@ Widget build(BuildContext context) {
 ```dart
 Logger.debug(ref, 'Init', 'App started');
 Logger.info(ref, 'User', 'User logged in');
-Logger.error(ref, 'Crash', 'Null pointer exception');
-
+Logger.error(ref, 'Error', 'Something went wrong');
 Logger.api(
   ref: ref,
   heading: 'GET /api/user',
-  content: '{"id":1}',
+  content: '{"result": "ok"}',
   method: 'GET',
-  url: 'https://api.com/user',
-  headers: {'Authorization': 'Bearer ...'},
+  url: 'https://api.example.com/user',
+  headers: {'Authorization': 'Bearer token'},
   statusCode: 200,
-  timings: Duration(milliseconds: 120),
+  timings: Duration(milliseconds: 123),
 );
 ```
 
-### 5. Dio Integration
-```dart
-final dio = Dio();
-dio.interceptors.add(DevLoggerDioInterceptor(ref));
-```
+## Screenshots
 
-### 6. http Integration
-```dart
-final client = Logger.wrapHttp(ref);
-final response = await client.get(Uri.parse('https://api.com/user'));
-```
-
-## Overlay UI & Features
-- **Open overlay:** Long-press with gesture (if enabled) or call `LoggerCore.showOverlay()`
-- **Segmented tabs:** Switch between All, Debug, Logs, API
-- **Search:** Tap search icon, type keyword, navigate matches
-- **Export:** Tap export, filter by type/date/keyword, export as JSON or text
-- **Share:** Tap settings → share icon, select log type, share with device/app info
-- **Clear logs:** Tap settings → delete icon
-- **Settings:** View device/app info, app version, network type, etc.
+<!-- Add screenshots here to showcase the floating app bar, segmented tabs, and log cards. -->
 
 ## API Reference
-- `Logger.init(DevLoggerConfig config)` – Initialize the logger
-- `Logger.debug(WidgetRef ref, String heading, String content)` – Log debug/info
-- `Logger.info(WidgetRef ref, String heading, String content)` – Log info
-- `Logger.error(WidgetRef ref, String heading, String content)` – Log error
-- `Logger.api(...)` – Log API call manually
-- `DevLoggerDioInterceptor` – Dio interceptor for API logging
-- `Logger.wrapHttp(ref, [client])` – Wrap http.Client for API logging
 
-## Platform Compatibility
-- **Android:** Supported
-- **iOS:** Supported
-- **Web:** Supported
-
-## UI/UX
-- Modern dark mode overlay
-- Segmented navigation for log types
-- Expandable/collapsible API log cards
-- Smooth search and match navigation
-- Material bottom sheets for export/share
-- Device/app info in settings
-
-## Exporting, Sharing, and Clearing Logs
-- **Export:** Tap export, filter logs, choose format, download to device
-- **Share:** Tap settings → share, select log type, share as text/file (with device/app info)
-- **Clear:** Tap settings → delete icon to clear all logs
-
-## Contributing & Issues
-- Contributions are welcome! Please open issues or pull requests on GitHub.
-- For bugs, feature requests, or questions, file an issue with details and reproduction steps.
+See the Dart doc comments in the code for detailed API documentation. All public classes, methods, and fields are fully documented.
 
 ## License
+
 MIT
 
 ## Additional information

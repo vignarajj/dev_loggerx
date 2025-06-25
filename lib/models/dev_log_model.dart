@@ -1,6 +1,9 @@
 import 'package:hive/hive.dart';
 part 'dev_log_model.g.dart';
 
+/// Base model for all log entries (debug, log, API).
+///
+/// Stores common log fields: id, timestamp, type, heading, and content.
 @HiveType(typeId: 0)
 class DevLogModel {
   @HiveField(0)

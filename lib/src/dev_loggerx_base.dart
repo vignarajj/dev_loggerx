@@ -1,8 +1,9 @@
-// Base implementation for DevLogger plugin.
-// Add doc comments to all public classes, methods, and fields in this file.
-// ... (add doc comments as needed) ...
+// Base implementation for DevLoggerX plugin.
+//
+// This file is a placeholder for future base logic and utilities.
 
-/// Checks if you are awesome. Spoiler: you are.
+/// Example class for testing the package setup.
 class Awesome {
+  /// Returns true if you are awesome.
   bool get isAwesome => true;
 }

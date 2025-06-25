@@ -2,16 +2,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'logger_service.dart';
 
+/// Dio interceptor for logging API requests and responses to DevLoggerX.
 class LoggerDio extends Interceptor {
   final WidgetRef ref;
   LoggerDio(this.ref);
 
+  /// Called before a request is sent. Stores start time.
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     options.extra['devLoggerStartTime'] = DateTime.now();
     super.onRequest(options, handler);
   }
 
+  /// Called when a response is received. Logs the API call.
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     final startTime =

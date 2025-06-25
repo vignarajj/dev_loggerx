@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Segmented tab bar for switching between log categories (All, Debug, Logs, API).
+///
+/// Used at the top of the logger overlay for tab navigation.
 class SegmentedTabBar extends StatelessWidget {
   final List<String> tabs;
   final int selectedIndex;
@@ -12,6 +15,7 @@ class SegmentedTabBar extends StatelessWidget {
     super.key,
   });
 
+  /// Builds the segmented tab bar UI.
   @override
   Widget build(BuildContext context) {
     return Padding(
