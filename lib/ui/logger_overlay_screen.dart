@@ -396,7 +396,7 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
           if (nav != null && nav.canPop()) {
             nav.pop();
           } else {
-            // LoggerCore.hideOverlay();
+            LoggerCore.hideOverlay();
           }
         },
         canPop: false,

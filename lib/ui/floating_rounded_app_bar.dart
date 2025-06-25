@@ -22,7 +22,7 @@ class FloatingRoundedAppBar extends StatelessWidget implements PreferredSizeWidg
     this.leading,
     this.height = 56,
     this.backgroundColor,
-    this.margin = const EdgeInsets.fromLTRB(16, 16, 16, 8),
+    this.margin = const EdgeInsets.fromLTRB(16, 0, 16, 0),
   });
 
   @override
@@ -32,9 +32,9 @@ class FloatingRoundedAppBar extends StatelessWidget implements PreferredSizeWidg
   Widget build(BuildContext context) {
     final color = backgroundColor ?? Colors.grey[900];
     return SafeArea(
-      bottom: false,
       child: Container(
         margin: margin,
+
         child: Material(
           elevation: 8,
           borderRadius: BorderRadius.circular(24),
@@ -43,41 +43,19 @@ class FloatingRoundedAppBar extends StatelessWidget implements PreferredSizeWidg
             borderRadius: BorderRadius.circular(24),
             child: Container(
               height: height,
-              decoration: BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha(46),
-                    blurRadius: 16,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              // Removed SafeArea to eliminate app bar spacing at the top
               child: Row(
                 children: [
-                  if (leading != null)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: leading!,
-                    ),
+                  if (leading != null) leading!,
                   if (title != null)
                     Expanded(
                       child: DefaultTextStyle(
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          fontFamily: 'RobotoMono',
-                        ),
+                        style: Theme.of(context).textTheme.headlineMedium!,
                         child: title!,
                       ),
                     ),
-                  if (actions != null)
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: actions!,
-                    ),
+                  if (actions != null) ...actions!,
                 ],
               ),
             ),
@@ -86,4 +64,4 @@ class FloatingRoundedAppBar extends StatelessWidget implements PreferredSizeWidg
       ),
     );
   }
-} 
+}
