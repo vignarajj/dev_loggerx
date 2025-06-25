@@ -21,3 +21,4 @@ web/icons/
 
 # macOS specific files
 .DS_Store
+*.g.dart
