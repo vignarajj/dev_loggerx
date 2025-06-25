@@ -1,4 +1,4 @@
-// Config layer for Logger plugin 
+// Config layer for Logger plugin
 
 /// Logger configuration model.
 ///
@@ -8,12 +8,16 @@
 class LoggerConfig {
   /// Enable logger in debug mode (default: true)
   final bool enableInDebug;
+
   /// List of allowed IDs (email, phone, or string IDs) for access in production. If empty, no one is allowed by ID.
   final List<String> allowedIds;
+
   /// Enable global long-press gesture to open overlay (default: true)
   final bool enableLongPressGesture;
+
   /// Enable log persistence using Hive (default: false)
   final bool enablePersistence;
+
   /// Maximum number of logs to store (if persistence enabled)
   final int? maxStoredLogs;
 
@@ -37,9 +41,10 @@ class LoggerConfig {
     return LoggerConfig(
       enableInDebug: enableInDebug ?? this.enableInDebug,
       allowedIds: allowedIds ?? this.allowedIds,
-      enableLongPressGesture: enableLongPressGesture ?? this.enableLongPressGesture,
+      enableLongPressGesture:
+          enableLongPressGesture ?? this.enableLongPressGesture,
       enablePersistence: enablePersistence ?? this.enablePersistence,
       maxStoredLogs: maxStoredLogs ?? this.maxStoredLogs,
     );
   }
-} 
+}

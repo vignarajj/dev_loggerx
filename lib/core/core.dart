@@ -1,1 +1,1 @@
-// Core layer for DevLogger plugin 
+// Core layer for DevLogger plugin

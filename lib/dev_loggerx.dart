@@ -10,24 +10,23 @@
 ///
 library;
 
-export 'src/dev_loggerx_base.dart';
-export 'config/config.dart' show LoggerConfig;
-export 'services/services.dart' show LoggerDio, LoggerHttp;
-export 'models/models.dart';
-export 'ui/ui.dart';
-export 'utils/utils.dart';
-
-import 'package:dev_loggerx/ui/ui.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'config/config.dart';
+import 'package:dev_loggerx/models/log_enums.dart';
+import 'package:dev_loggerx/ui/logger_overlay_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'config/config.dart';
 import 'services/services.dart';
-import 'models/models.dart';
+
+export 'config/config.dart' show LoggerConfig;
+export 'services/services.dart' show LoggerDio, LoggerHttp, loggerProvider;
+export 'src/dev_loggerx_base.dart';
 
 /// Core logger entry point for configuration, overlay, and access control.
 class LoggerCore {
   /// Current logger configuration (reactive).
-  static final ValueNotifier<LoggerConfig> config = ValueNotifier(const LoggerConfig());
+  static final ValueNotifier<LoggerConfig> config =
+      ValueNotifier(const LoggerConfig());
   static bool _initialized = false;
   static OverlayEntry? _loggerOverlayEntry;
   static bool _overlayShown = false;
@@ -109,6 +108,7 @@ class LoggerCore {
 /// Internal widget to capture long-press anywhere on the screen.
 class _LongPressDetector extends StatelessWidget {
   final VoidCallback onLongPress;
+
   const _LongPressDetector({required this.onLongPress});
 
   @override
@@ -131,22 +131,23 @@ class Logger {
   /// Logs a debug/info message.
   static void debug(WidgetRef ref, String heading, String content) {
     ref.read(loggerProvider.notifier).addDebugLog(
-      heading: heading,
-      content: content,
-      level: DebugLogLevel.info,
-    );
+          heading: heading,
+          content: content,
+          level: DebugLogLevel.info,
+        );
   }
 
   /// Logs an info message.
-  static void info(WidgetRef ref, String heading, String content) => debug(ref, heading, content);
+  static void info(WidgetRef ref, String heading, String content) =>
+      debug(ref, heading, content);
 
   /// Logs an error message.
   static void error(WidgetRef ref, String heading, String content) {
     ref.read(loggerProvider.notifier).addDebugLog(
-      heading: heading,
-      content: content,
-      level: DebugLogLevel.error,
-    );
+          heading: heading,
+          content: content,
+          level: DebugLogLevel.error,
+        );
   }
 
   /// Logs an API request/response manually.
@@ -163,16 +164,16 @@ class Logger {
     int? memoryUsage,
   }) {
     ref.read(loggerProvider.notifier).addApiLog(
-      heading: heading,
-      content: content,
-      method: method,
-      url: url,
-      headers: headers,
-      body: body,
-      statusCode: statusCode,
-      timings: timings,
-      memoryUsage: memoryUsage,
-    );
+          heading: heading,
+          content: content,
+          method: method,
+          url: url,
+          headers: headers,
+          body: body,
+          statusCode: statusCode,
+          timings: timings,
+          memoryUsage: memoryUsage,
+        );
   }
 
   /// Wraps an http.Client to enable API logging.

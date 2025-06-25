@@ -9,6 +9,7 @@
 /// - Riverpod state management
 ///
 /// Each button is a test case with a code comment explaining its purpose.
+library;
 
 import 'package:dev_loggerx/services/services.dart';
 import 'package:flutter/material.dart';
