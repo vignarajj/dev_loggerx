@@ -632,7 +632,8 @@ Memory Usage: ${log.memoryUsage ?? '-'}
                 child: ElevatedButton(
                   onPressed: () async {
                     Navigator.of(ctx).pop();
-                    await _shareLogsWithDeviceInfo(dialogContext, filterIndex: selectedIndex);
+                    await _shareLogsWithDeviceInfo(dialogContext,
+                        filterIndex: selectedIndex);
                   },
                   child: const Text('Share Logs'),
                   style: ElevatedButton.styleFrom(
@@ -1049,7 +1050,10 @@ class _SettingsDetailPage extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Device & App Info'),
+        title: const Text(
+          'Device & App Info',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        ),
         backgroundColor: Colors.grey[900],
         actions: [
           IconButton(
