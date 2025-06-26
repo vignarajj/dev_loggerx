@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dev_loggerx/services/services.dart';
+import 'package:logit/services/services.dart';
 import 'floating_rounded_app_bar.dart';
 
 /// Settings/details page for device and app info, log sharing, and clearing logs.

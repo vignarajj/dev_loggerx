@@ -11,9 +11,9 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/to/develop-packages). 
 -->
 
-# DevLoggerX Flutter Plugin
+# Logit Flutter Plugin
 
-A developer-friendly Flutter plugin to capture, view, and manage logs inside your app. Supports Debug, Logs, and API logs. Inspired by cr_logger, always in dark mode, and built with Riverpod.
+A developer-friendly Flutter plugin to capture, view, and manage logs inside your app. Supports Debug, Logs, and API logs.
 
 ## Features
 - **Floating, rounded app bar**: Modern, elevated app bar that appears to float at the top of the overlay and settings screens.
@@ -35,64 +35,64 @@ A developer-friendly Flutter plugin to capture, view, and manage logs inside you
 ### 1. Add Dependency
 ```yaml
 dependencies:
-  dev_loggerx: ^0.1.0
+  logit: ^1.0.0
 ```
 
 ### 2. Initialize in main()
 ```dart
-import 'package:dev_loggerx/dev_loggerx.dart';
+import 'package:logit/logit.dart';
 
 void main() {
-  Logger.init(const LoggerConfig(
+  Logit.init(const LoggerConfig(
     enableInDebug: true,
-    allowedIds: ['dev@company.com'],
+    allowedIds: ['test@dev.com'],
     enableLongPressGesture: true,
+    enablePersistence: true,
+    maxStoredLogs: 100,
   ));
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 ```
 
-### 3. Attach Global Long-Press (in your root widget)
+### 3. Attach Logger Overlay
 ```dart
 @override
-Widget build(BuildContext context) {
-  LoggerCore.attachLongPress(context, userId: currentUserEmail);
-  return MaterialApp(...);
+void initState() {
+  super.initState();
+  Logit.attachOverlay(context);
 }
 ```
 
-### 4. Logging Usage
+### 4. Log Messages
 ```dart
-Logger.debug(ref, 'Init', 'App started');
-Logger.info(ref, 'User', 'User logged in');
-Logger.error(ref, 'Error', 'Something went wrong');
-Logger.api(
-  ref: ref,
-  heading: 'GET /api/user',
-  content: '{"result": "ok"}',
-  method: 'GET',
-  url: 'https://api.example.com/user',
-  headers: {'Authorization': 'Bearer token'},
-  statusCode: 200,
-  timings: Duration(milliseconds: 123),
-);
+Logit.debug('Debug message');
+Logit.api('GET', 'https://api.example.com', headers: {}, body: {}, statusCode: 200);
+Logit.log('General log message');
 ```
 
 ## Screenshots
+Below are some screenshots showcasing the functionality of this plugin:
 
-<!-- Add screenshots here to showcase the floating app bar, segmented tabs, and log cards. -->
+![Screenshot 1](screenshots/Screenshot_20250626-121919.png)
+![Screenshot 2](screenshots/Screenshot_20250626-121933.png)
+![Screenshot 3](screenshots/Screenshot_20250626-121957.png)
+![Screenshot 4](screenshots/Screenshot_20250626-122007.png)
+![Screenshot 5](screenshots/Screenshot_20250626-122028.png)
+![Screenshot 6](screenshots/Screenshot_20250626-122039.png)
+![Screenshot 7](screenshots/Screenshot_20250626-122048.png)
+![Screenshot 8](screenshots/Screenshot_20250626-122100.png)
+![Screenshot 9](screenshots/Screenshot_20250626-122128.png)
 
-## API Reference
+## Export Logs
+Logs can be exported in JSON or plain text format using the export modal.
 
-See the Dart doc comments in the code for detailed API documentation. All public classes, methods, and fields are fully documented.
+## Contributing
+Contributions are welcome! Please follow the guidelines in CONTRIBUTING.md.
 
 ## License
+This project is licensed under the MIT License. See LICENSE for details.
 
-MIT
+## Additional Information
 
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
-
+- For more details on the API, check out the [API Documentation](doc/api/index.html).
+- If you find any issues or have a feature request, please file them on the [GitHub repository](https://github.com/vignarajj/dev_loggerx).

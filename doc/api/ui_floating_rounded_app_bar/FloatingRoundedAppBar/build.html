@@ -24,7 +24,7 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="../../index.html">dev_loggerx</a></li>
+    <li><a href="../../index.html">logit</a></li>
     <li><a href="../../ui_floating_rounded_app_bar/">ui&#47;floating_rounded_app_bar.dart</a></li>
     <li><a href="../../ui_floating_rounded_app_bar/FloatingRoundedAppBar-class.html">FloatingRoundedAppBar</a></li>
     <li class="self-crumb">build method</li>
@@ -111,9 +111,9 @@ and</li>
 Widget build(BuildContext context) {
   final color = backgroundColor ?? Colors.grey[900];
   return SafeArea(
-    bottom: false,
     child: Container(
       margin: margin,
+
       child: Material(
         elevation: 8,
         borderRadius: BorderRadius.circular(24),
@@ -122,41 +122,19 @@ Widget build(BuildContext context) {
           borderRadius: BorderRadius.circular(24),
           child: Container(
             height: height,
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(24),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withAlpha(46),
-                  blurRadius: 16,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            &#47;&#47; Removed SafeArea to eliminate app bar spacing at the top
             child: Row(
               children: [
-                if (leading != null)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: leading!,
-                  ),
+                if (leading != null) leading!,
                 if (title != null)
                   Expanded(
                     child: DefaultTextStyle(
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        fontFamily: &#39;RobotoMono&#39;,
-                      ),
+                      style: Theme.of(context).textTheme.headlineMedium!,
                       child: title!,
                     ),
                   ),
-                if (actions != null)
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: actions!,
-                  ),
+                if (actions != null) ...actions!,
               ],
             ),
           ),
@@ -177,7 +155,7 @@ Widget build(BuildContext context) {
   </form>
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-    <li><a href="../../index.html">dev_loggerx</a></li>
+    <li><a href="../../index.html">logit</a></li>
     <li><a href="../../ui_floating_rounded_app_bar/">floating_rounded_app_bar</a></li>
     <li><a href="../../ui_floating_rounded_app_bar/FloatingRoundedAppBar-class.html">FloatingRoundedAppBar</a></li>
     <li class="self-crumb">build method</li>
@@ -191,7 +169,7 @@ Widget build(BuildContext context) {
 </main>
 <footer>
   <span class="no-break">
-    dev_loggerx
+    logit
       1.0.0
   </span>
   

@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_riverpod: ^2.4.0
   dio: ^5.4.0
-  dev_loggerx:
+  logit:
     path: ../
   device_info_plus: ^11.5.0
   package_info_plus: ^8.3.0

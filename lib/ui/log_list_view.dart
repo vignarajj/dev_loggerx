@@ -1,5 +1,5 @@
-import 'package:dev_loggerx/models/api_log_model.dart';
-import 'package:dev_loggerx/models/dev_log_model.dart';
+import 'package:logit/models/api_log_model.dart';
+import 'package:logit/models/dev_log_model.dart';
 import 'package:flutter/material.dart';
 import 'generic_log_card.dart';
 import 'api_log_card.dart';

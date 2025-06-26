@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dev_loggerx/models/dev_log_model.dart';
-import 'package:dev_loggerx/models/debug_log_model.dart';
-import 'package:dev_loggerx/models/api_log_model.dart';
-import 'package:dev_loggerx/config/config.dart';
+import 'package:logit/models/dev_log_model.dart';
+import 'package:logit/models/debug_log_model.dart';
+import 'package:logit/models/api_log_model.dart';
+import 'package:logit/config/config.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
-import 'package:dev_loggerx/models/log_enums.dart';
+import 'package:logit/models/log_enums.dart';
 
 /// Riverpod provider for the logger service (log state management).
 final loggerProvider = NotifierProvider<LoggerService, List<DevLogModel>>(

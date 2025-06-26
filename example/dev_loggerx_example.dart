@@ -11,10 +11,10 @@
 /// Each button is a test case with a code comment explaining its purpose.
 library;
 
-import 'package:dev_loggerx/services/services.dart';
+import 'package:logit/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dev_loggerx/dev_loggerx.dart';
+import 'package:logit/logit.dart';
 import 'package:dio/dio.dart';
 
 void main() async {
@@ -22,7 +22,7 @@ void main() async {
   // Initialize persistence if needed
   await LoggerService.initPersistenceIfNeeded(const LoggerConfig(enablePersistence: true));
   // Initialize the logger with all config options
-  Logger.init(const LoggerConfig(
+  Logit.init(const LoggerConfig(
     enableInDebug: true,
     allowedIds: ['test@dev.com'],
     enableLongPressGesture: true,
@@ -39,7 +39,7 @@ class LoggerExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'LoggerX Example',
+      title: 'LogIt Example',
       theme: ThemeData.dark(),
       home: const LoggerExampleHome(),
       debugShowCheckedModeBanner: false,
@@ -55,10 +55,10 @@ class LoggerExampleHome extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Attach the global long-press gesture for overlay
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      LoggerCore.attachLongPress(context, userId: 'test@dev.com');
+      LogitCore.attachLongPress(context, userId: 'test@dev.com');
     });
     return Scaffold(
-      appBar: AppBar(title: const Text('LoggerX Example')),
+      appBar: AppBar(title: const Text('Logit Example')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -67,14 +67,14 @@ class LoggerExampleHome extends ConsumerWidget {
           /// Test: Log a debug/info message
           ElevatedButton(
             onPressed: () {
-              Logger.debug(ref, 'Debug Test', 'This is a debug/info log.');
+              Logit.debug(ref, 'Debug Test', 'This is a debug/info log.');
             },
             child: const Text('Log Debug/Info'),
           ),
           /// Test: Log an error message
           ElevatedButton(
             onPressed: () {
-              Logger.error(ref, 'Error Test', 'This is an error log.');
+              Logit.error(ref, 'Error Test', 'This is an error log.');
             },
             child: const Text('Log Error'),
           ),
@@ -91,7 +91,7 @@ class LoggerExampleHome extends ConsumerWidget {
           /// Test: Log an API call manually
           ElevatedButton(
             onPressed: () {
-              Logger.api(
+              Logit.api(
                 ref: ref,
                 heading: 'Manual API Log',
                 content: '{"result": "ok"}',
@@ -118,7 +118,7 @@ class LoggerExampleHome extends ConsumerWidget {
           /// Test: Log an API call using http
           ElevatedButton(
             onPressed: () async {
-              final client = Logger.wrapHttp(ref);
+              final client = Logit.wrapHttp(ref);
               try {
                 await client.get(Uri.parse('https://jsonplaceholder.typicode.com/posts/2'));
               } catch (_) {}

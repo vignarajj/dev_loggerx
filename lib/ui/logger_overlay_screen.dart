@@ -4,11 +4,11 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:dev_loggerx/dev_loggerx.dart';
-import 'package:dev_loggerx/models/api_log_model.dart';
-import 'package:dev_loggerx/models/debug_log_model.dart';
-import 'package:dev_loggerx/models/dev_log_model.dart';
-import 'package:dev_loggerx/models/log_enums.dart';
+import 'package:logit/logit.dart';
+import 'package:logit/models/api_log_model.dart';
+import 'package:logit/models/debug_log_model.dart';
+import 'package:logit/models/dev_log_model.dart';
+import 'package:logit/models/log_enums.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -324,7 +324,7 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
     } else {
       final tempDir = await getTemporaryDirectory();
       final file = await File(
-              '${tempDir.path}/devloggerx_logs_${now.millisecondsSinceEpoch}.json')
+              '${tempDir.path}/logit_logs_${now.millisecondsSinceEpoch}.json')
           .writeAsString(exportData);
       await SharePlus.instance.share(ShareParams(files: [XFile(file.path)]));
       if (context.mounted) {
@@ -396,7 +396,7 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
           if (nav != null && nav.canPop()) {
             nav.pop();
           } else {
-            LoggerCore.hideOverlay();
+            LogitCore.hideOverlay();
           }
         },
         canPop: false,
@@ -431,7 +431,7 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
                                 ),
                                 Text(
                                   '${_searchMatches.isEmpty ? 0 : _searchIndex + 1}/${_searchMatches.length}',
-                                  style: const TextStyle(color: Colors.white),
+                                  style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.arrow_downward,
@@ -442,10 +442,13 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
                             ),
                         ],
                       )
-                    : const Text(
-                        'Dev Logger',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                      ),
+                    : Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
+                      child: const Text(
+                          'LOGIT',
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                    ),
                 actions: [
                   if (!_showSearch)
                     IconButton(
@@ -534,7 +537,7 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
                         messenger?.showSnackBar(
                           const SnackBar(
                             content: Text('Log copied to clipboard!'),
-                            backgroundColor: Colors.green,
+                            backgroundColor: Colors.greenAccent,
                             duration: Duration(seconds: 2),
                           ),
                         );

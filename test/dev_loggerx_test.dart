@@ -1,4 +1,4 @@
-import 'package:dev_loggerx/dev_loggerx.dart';
+import 'package:logit/logit.dart';
 import 'package:test/test.dart';
 
 void main() {

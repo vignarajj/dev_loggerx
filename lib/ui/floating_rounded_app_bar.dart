@@ -20,7 +20,7 @@ class FloatingRoundedAppBar extends StatelessWidget implements PreferredSizeWidg
     this.title,
     this.actions,
     this.leading,
-    this.height = 56,
+    this.height = 48,
     this.backgroundColor,
     this.margin = const EdgeInsets.fromLTRB(16, 0, 16, 0),
   });
@@ -51,7 +51,7 @@ class FloatingRoundedAppBar extends StatelessWidget implements PreferredSizeWidg
                   if (title != null)
                     Expanded(
                       child: DefaultTextStyle(
-                        style: Theme.of(context).textTheme.headlineMedium!,
+                        style: Theme.of(context).textTheme.headlineLarge!,
                         child: title!,
                       ),
                     ),

@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="dev_loggerx API docs, for the Dart programming language.">
-  <title>dev_loggerx - Dart API docs</title>
+  <meta name="description" content="logit API docs, for the Dart programming language.">
+  <title>logit - Dart API docs</title>
 
 
   
@@ -24,9 +24,9 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="https://vignaraj.dev">dev_loggerx package</a></li>
+    <li><a href="https://vignaraj.dev">logit package</a></li>
   </ol>
-  <div class="self-name">dev_loggerx</div>
+  <div class="self-name">logit</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -55,8 +55,8 @@ For general information about developing packages, see the Dart guide for
 and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/to/develop-packages). 
 -->
-<h1 id="devloggerx-flutter-plugin">DevLoggerX Flutter Plugin</h1>
-<p>A developer-friendly Flutter plugin to capture, view, and manage logs inside your app. Supports Debug, Logs, and API logs. Inspired by cr_logger, always in dark mode, and built with Riverpod.</p>
+<h1 id="logit-flutter-plugin">LogIt Flutter Plugin</h1>
+<p>A developer-friendly Flutter plugin to capture, view, and manage logs inside your app. Supports Debug, Logs, and API logs.</p>
 <h2 id="features">Features</h2>
 <ul>
 <li><strong>Floating, rounded app bar</strong>: Modern, elevated app bar that appears to float at the top of the overlay and settings screens.</li>
@@ -76,52 +76,40 @@ and the Flutter guide for
 <h2 id="getting-started">Getting Started</h2>
 <h3 id="1-add-dependency">1. Add Dependency</h3>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  dev_loggerx: ^0.1.0
+  logit: ^1.0.0
 </code></pre>
 <h3 id="2-initialize-in-main">2. Initialize in main()</h3>
-<pre class="language-dart"><code class="language-dart">import 'package:dev_loggerx/dev_loggerx.dart';
+<pre class="language-dart"><code class="language-dart">import 'package:logit/logit.dart';
 
 void main() {
-  Logger.init(const LoggerConfig(
+  LogIt.init(const LogItConfig(
     enableInDebug: true,
-    allowedIds: ['dev@company.com'],
+    allowedIds: ['test@dev.com'],
     enableLongPressGesture: true,
+    enablePersistence: true,
+    maxStoredLogs: 100,
   ));
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 </code></pre>
-<h3 id="3-attach-global-long-press-in-your-root-widget">3. Attach Global Long-Press (in your root widget)</h3>
+<h3 id="3-attach-logger-overlay">3. Attach Logger Overlay</h3>
 <pre class="language-dart"><code class="language-dart">@override
-Widget build(BuildContext context) {
-  LoggerCore.attachLongPress(context, userId: currentUserEmail);
-  return MaterialApp(...);
+void initState() {
+  super.initState();
+  LogIt.attachOverlay(context);
 }
 </code></pre>
-<h3 id="4-logging-usage">4. Logging Usage</h3>
-<pre class="language-dart"><code class="language-dart">Logger.debug(ref, 'Init', 'App started');
-Logger.info(ref, 'User', 'User logged in');
-Logger.error(ref, 'Error', 'Something went wrong');
-Logger.api(
-  ref: ref,
-  heading: 'GET /api/user',
-  content: '{"result": "ok"}',
-  method: 'GET',
-  url: 'https://api.example.com/user',
-  headers: {'Authorization': 'Bearer token'},
-  statusCode: 200,
-  timings: Duration(milliseconds: 123),
-);
+<h3 id="4-log-messages">4. Log Messages</h3>
+<pre class="language-dart"><code class="language-dart">LogIt.debug('Debug message');
+LogIt.api('GET', 'https://api.example.com', headers: {}, body: {}, statusCode: 200);
+LogIt.log('General log message');
 </code></pre>
-<h2 id="screenshots">Screenshots</h2>
-<!-- Add screenshots here to showcase the floating app bar, segmented tabs, and log cards. -->
-<h2 id="api-reference">API Reference</h2>
-<p>See the Dart doc comments in the code for detailed API documentation. All public classes, methods, and fields are fully documented.</p>
+<h2 id="export-logs">Export Logs</h2>
+<p>Logs can be exported in JSON or plain text format using the export modal.</p>
+<h2 id="contributing">Contributing</h2>
+<p>Contributions are welcome! Please follow the guidelines in CONTRIBUTING.md.</p>
 <h2 id="license">License</h2>
-<p>MIT</p>
-<h2 id="additional-information">Additional information</h2>
-<p>TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.</p>
+<p>This project is licensed under the MIT License. See LICENSE for details.</p>
 </section>
 
 
@@ -142,8 +130,8 @@ from the package authors, and more.</p>
 <dd>
 </dd>
 
-          <dt id="dev_loggerx">
-  <span class="name"><a href="dev_loggerx/">dev_loggerx</a></span> 
+          <dt id="logit">
+  <span class="name"><a href="logit/">logit</a></span> 
 
 </dt>
 <dd>LoggerX: A developer-friendly Flutter plugin for in-app logging, API tracking, and debugging.
@@ -272,15 +260,15 @@ from the package authors, and more.</p>
   </form>
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-    <li><a href="https://vignaraj.dev">dev_loggerx package</a></li>
+    <li><a href="https://vignaraj.dev">logit package</a></li>
 </ol>
 
-    <h5 class="hidden-xs"><span class="package-name">dev_loggerx</span> <span class="package-kind">package</span></h5>
+    <h5 class="hidden-xs"><span class="package-name">logit</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
       <li><a href="config_config/">config/config</a></li>
       <li><a href="core_core/">core/core</a></li>
-      <li><a href="dev_loggerx/">dev_loggerx</a></li>
+      <li><a href="logit/">logit</a></li>
       <li><a href="models_api_log_model/">models/api_log_model</a></li>
       <li><a href="models_debug_log_model/">models/debug_log_model</a></li>
       <li><a href="models_dev_log_model/">models/dev_log_model</a></li>
@@ -305,7 +293,7 @@ from the package authors, and more.</p>
 </main>
 <footer>
   <span class="no-break">
-    dev_loggerx
+    logit
       1.0.0
   </span>
   

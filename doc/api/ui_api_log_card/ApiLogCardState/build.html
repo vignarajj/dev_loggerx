@@ -24,7 +24,7 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="../../index.html">dev_loggerx</a></li>
+    <li><a href="../../index.html">logit</a></li>
     <li><a href="../../ui_api_log_card/">ui&#47;api_log_card.dart</a></li>
     <li><a href="../../ui_api_log_card/ApiLogCardState-class.html">ApiLogCardState</a></li>
     <li class="self-crumb">build method</li>
@@ -68,7 +68,106 @@
     </section>
     
 <section class="desc markdown">
-  <p>Builds the API log card UI.</p>
+  <p>Describes the part of the user interface represented by this widget.</p>
+<p>The framework calls this method in a number of different situations. For
+example:</p>
+<ul>
+<li>After calling <a href="https://api.flutter.dev/flutter/widgets/State/initState.html">initState</a>.</li>
+<li>After calling <a href="https://api.flutter.dev/flutter/widgets/State/didUpdateWidget.html">didUpdateWidget</a>.</li>
+<li>After receiving a call to <a href="https://api.flutter.dev/flutter/widgets/State/setState.html">setState</a>.</li>
+<li>After a dependency of this <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object changes (e.g., an
+<a href="https://api.flutter.dev/flutter/widgets/InheritedWidget-class.html">InheritedWidget</a> referenced by the previous <a href="../../ui_api_log_card/ApiLogCardState/build.html">build</a> changes).</li>
+<li>After calling <a href="https://api.flutter.dev/flutter/widgets/State/deactivate.html">deactivate</a> and then reinserting the <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object into
+the tree at another location.</li>
+</ul>
+<p>This method can potentially be called in every frame and should not have
+any side effects beyond building a widget.</p>
+<p>The framework replaces the subtree below this widget with the widget
+returned by this method, either by updating the existing subtree or by
+removing the subtree and inflating a new subtree, depending on whether the
+widget returned by this method can update the root of the existing
+subtree, as determined by calling <a href="https://api.flutter.dev/flutter/widgets/Widget/canUpdate.html">Widget.canUpdate</a>.</p>
+<p>Typically implementations return a newly created constellation of widgets
+that are configured with information from this widget's constructor, the
+given <a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a>, and the internal state of this <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object.</p>
+<p>The given <a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a> contains information about the location in the
+tree at which this widget is being built. For example, the context
+provides the set of inherited widgets for this location in the tree. The
+<a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a> argument is always the same as the <code>context</code> property of
+this <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object and will remain the same for the lifetime of this
+object. The <a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a> argument is provided redundantly here so that
+this method matches the signature for a <a href="https://api.flutter.dev/flutter/widgets/WidgetBuilder.html">WidgetBuilder</a>.</p>
+<h2 id="design-discussion">Design discussion</h2>
+<h3 id="why-is-the-build-method-on-state-and-not-statefulwidget">Why is the <a href="../../ui_api_log_card/ApiLogCardState/build.html">build</a> method on <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a>, and not <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a>?</h3>
+<p>Putting a <code>Widget build(BuildContext context)</code> method on <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> rather
+than putting a <code>Widget build(BuildContext context, State state)</code> method
+on <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a> gives developers more flexibility when subclassing
+<a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a>.</p>
+<p>For example, <a href="https://api.flutter.dev/flutter/widgets/AnimatedWidget-class.html">AnimatedWidget</a> is a subclass of <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a> that
+introduces an abstract <code>Widget build(BuildContext context)</code> method for its
+subclasses to implement. If <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a> already had a <a href="../../ui_api_log_card/ApiLogCardState/build.html">build</a> method
+that took a <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> argument, <a href="https://api.flutter.dev/flutter/widgets/AnimatedWidget-class.html">AnimatedWidget</a> would be forced to provide
+its <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object to subclasses even though its <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object is an
+internal implementation detail of <a href="https://api.flutter.dev/flutter/widgets/AnimatedWidget-class.html">AnimatedWidget</a>.</p>
+<p>Conceptually, <a href="https://api.flutter.dev/flutter/widgets/StatelessWidget-class.html">StatelessWidget</a> could also be implemented as a subclass of
+<a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a> in a similar manner. If the <a href="../../ui_api_log_card/ApiLogCardState/build.html">build</a> method were on
+<a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a> rather than <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a>, that would not be possible anymore.</p>
+<p>Putting the <a href="../../ui_api_log_card/ApiLogCardState/build.html">build</a> function on <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> rather than <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a> also
+helps avoid a category of bugs related to closures implicitly capturing
+<code>this</code>. If you defined a closure in a <a href="../../ui_api_log_card/ApiLogCardState/build.html">build</a> function on a
+<a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a>, that closure would implicitly capture <code>this</code>, which is
+the current widget instance, and would have the (immutable) fields of that
+instance in scope:</p>
+<pre class="language-dart"><code class="language-dart">// (this is not valid Flutter code)
+class MyButton extends StatefulWidgetX {
+  MyButton({super.key, required this.color});
+
+  final Color color;
+
+  @override
+  Widget build(BuildContext context, State state) {
+    return SpecialWidget(
+      handler: () { print('color: $color'); },
+    );
+  }
+}
+</code></pre>
+<p>For example, suppose the parent builds <code>MyButton</code> with <code>color</code> being blue,
+the <code>$color</code> in the print function refers to blue, as expected. Now,
+suppose the parent rebuilds <code>MyButton</code> with green. The closure created by
+the first build still implicitly refers to the original widget and the
+<code>$color</code> still prints blue even through the widget has been updated to
+green; should that closure outlive its widget, it would print outdated
+information.</p>
+<p>In contrast, with the <a href="../../ui_api_log_card/ApiLogCardState/build.html">build</a> function on the <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object, closures
+created during <a href="../../ui_api_log_card/ApiLogCardState/build.html">build</a> implicitly capture the <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> instance instead of
+the widget instance:</p>
+<pre class="language-dart"><code class="language-dart">class MyButton extends StatefulWidget {
+  const MyButton({super.key, this.color = Colors.teal});
+
+  final Color color;
+  // ...
+}
+
+class MyButtonState extends State&lt;MyButton&gt; {
+  // ...
+  @override
+  Widget build(BuildContext context) {
+    return SpecialWidget(
+      handler: () { print('color: ${widget.color}'); },
+    );
+  }
+}
+</code></pre>
+<p>Now when the parent rebuilds <code>MyButton</code> with green, the closure created by
+the first build still refers to <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object, which is preserved across
+rebuilds, but the framework has updated that <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object's <a href="https://api.flutter.dev/flutter/widgets/State/widget.html">widget</a>
+property to refer to the new <code>MyButton</code> instance and <code>${widget.color}</code>
+prints green, as expected.</p>
+<p>See also:</p>
+<ul>
+<li><a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a>, which contains the discussion on performance considerations.</li>
+</ul>
 </section>
 
 
@@ -78,70 +177,154 @@
   <pre class="language-dart"><code class="language-dart">@override
 Widget build(BuildContext context) {
   final log = widget.apiLog;
+  final isError = log.statusCode != null &amp;&amp; log.statusCode! &gt;= 400;
+  final cardColor = widget.isHighlighted ? Colors.blueGrey[800] : Colors.grey[900];
+  final borderColor = isError ? Colors.redAccent : Colors.blueAccent;
+
   return Card(
-    color: widget.isHighlighted ? Colors.blueGrey[800] : Colors.grey[900],
-    margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-    child: AnimatedSize(
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeInOut,
-      child: InkWell(
-        onTap: () =&gt; setState(() =&gt; _expanded = !_expanded),
-        onLongPress: () {
-          Clipboard.setData(ClipboardData(
-              text: &#39;[${log.method}] ${log.url}\n${log.content}&#39;));
-          if (widget.onCopy != null) widget.onCopy!();
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    &#39;[${log.method}]&#39;,
-                    style: const TextStyle(
-                        color: Colors.orangeAccent,
-                        fontWeight: FontWeight.bold),
+    color: cardColor,
+    margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(16),
+      side: BorderSide(color: borderColor.withOpacity(0.4), width: 1.2),
+    ),
+    child: InkWell(
+      onLongPress: () {
+        Clipboard.setData(ClipboardData(text: _buildFullApiLogText(log)));
+        if (widget.onCopy != null) widget.onCopy!();
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            &#47;&#47; Top row: Method, URL, Status, Timings
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.blueAccent,
+                    borderRadius: BorderRadius.circular(6),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      log.url,
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w600),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                  child: Text(
+                    log.method,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: &#39;RobotoMono&#39;,
+                      fontSize: 13,
                     ),
                   ),
-                  Icon(_expanded ? Icons.expand_less : Icons.expand_more,
-                      color: Colors.white54),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    log.url,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontFamily: &#39;RobotoMono&#39;,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Text(
+                  &#39;Status: &#39;,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontFamily: &#39;RobotoMono&#39;,
+                    fontSize: 12,
+                  ),
+                ),
+                Text(
+                  log.statusCode?.toString() ?? &#39;—&#39;,
+                  style: TextStyle(
+                    color: isError ? Colors.redAccent : Colors.greenAccent,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: &#39;RobotoMono&#39;,
+                    fontSize: 12,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Text(
+                  &#39;Timings: &#39;,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontFamily: &#39;RobotoMono&#39;,
+                    fontSize: 12,
+                  ),
+                ),
+                Text(
+                  log.timings != null ? &#39;${log.timings} ms&#39; : &#39;—&#39;,
+                  style: const TextStyle(
+                    color: Colors.orangeAccent,
+                    fontFamily: &#39;RobotoMono&#39;,
+                    fontSize: 12,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  formatTimestamp(log.timestamp),
+                  style: const TextStyle(
+                    color: Colors.white38,
+                    fontSize: 11,
+                    fontFamily: &#39;RobotoMono&#39;,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            &#47;&#47; Request Section
+            _SectionHeader(
+              title: &#39;Request&#39;,
+              expanded: _expandedRequest,
+              onTap: () =&gt; setState(() =&gt; _expandedRequest = !_expandedRequest),
+            ),
+            if (_expandedRequest)
+              _ApiSectionBody(
+                children: [
+                  _ApiDetailRow(label: &#39;Headers&#39;, value: _prettyPrintJson(log.headers)),
+                  _ApiDetailRow(label: &#39;Body&#39;, value: _prettyPrintJson(log.body)),
                 ],
               ),
-              const SizedBox(height: 4),
-              Text(formatTimestamp(log.timestamp),
-                  style:
-                      const TextStyle(color: Colors.white38, fontSize: 12)),
-              if (_expanded) ...[
-                const Divider(color: Colors.white12, height: 16),
-                ApiDetailRow(
-                    label: &#39;Status&#39;,
-                    value: log.statusCode?.toString() ?? &#39;—&#39;),
-                ApiDetailRow(
-                    label: &#39;Timings&#39;,
-                    value: log.timings != null ? &#39;${log.timings} ms&#39; : &#39;—&#39;),
-                ApiDetailRow(
-                    label: &#39;Headers&#39;,
-                    value: log.headers.isNotEmpty
-                        ? log.headers.toString()
-                        : &#39;—&#39;),
-                ApiDetailRow(
-                    label: &#39;Request Body&#39;,
-                    value: log.body?.toString() ?? &#39;—&#39;),
-                ApiDetailRow(label: &#39;Response&#39;, value: log.content),
-              ],
+            &#47;&#47; Response Section
+            _SectionHeader(
+              title: &#39;Response&#39;,
+              expanded: _expandedResponse,
+              onTap: () =&gt; setState(() =&gt; _expandedResponse = !_expandedResponse),
+            ),
+            if (_expandedResponse)
+              _ApiSectionBody(
+                children: [
+                  _ApiDetailRow(label: &#39;Headers&#39;, value: _prettyPrintJson(log.headers)),
+                  _ApiDetailRow(label: &#39;Body&#39;, value: _prettyPrintJson(log.content)),
+                ],
+              ),
+            &#47;&#47; Error Section (if error)
+            if (isError) ...[
+              _SectionHeader(
+                title: &#39;Error&#39;,
+                expanded: _expandedError,
+                onTap: () =&gt; setState(() =&gt; _expandedError = !_expandedError),
+                color: Colors.redAccent,
+              ),
+              if (_expandedError)
+                _ApiSectionBody(
+                  children: [
+                    _ApiDetailRow(label: &#39;Error&#39;, value: log.content),
+                  ],
+                ),
             ],
-          ),
+          ],
         ),
       ),
     ),
@@ -159,7 +342,7 @@ Widget build(BuildContext context) {
   </form>
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-    <li><a href="../../index.html">dev_loggerx</a></li>
+    <li><a href="../../index.html">logit</a></li>
     <li><a href="../../ui_api_log_card/">api_log_card</a></li>
     <li><a href="../../ui_api_log_card/ApiLogCardState-class.html">ApiLogCardState</a></li>
     <li class="self-crumb">build method</li>
@@ -173,7 +356,7 @@ Widget build(BuildContext context) {
 </main>
 <footer>
   <span class="no-break">
-    dev_loggerx
+    logit
       1.0.0
   </span>
   

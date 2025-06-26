@@ -1,5 +1,5 @@
-name: dev_loggerx
-description: A starting point for Dart libraries or applications.
+name: logit
+description: A developer-friendly Flutter plugin to capture, view, and manage logs inside your app. Supports Debug, Logs, and API logs.
 version: 1.0.0
 repository: https://github.com/vignarajj/dev_loggerx
 homepage: https://vignaraj.dev

@@ -1,4 +1,4 @@
-import 'package:dev_loggerx/models/api_log_model.dart';
+import 'package:logit/models/api_log_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
