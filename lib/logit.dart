@@ -10,8 +10,8 @@
 ///
 library;
 
-import 'package:logit/models/log_enums.dart';
-import 'package:logit/ui/logger_overlay_screen.dart';
+import 'package:logitx/models/log_enums.dart';
+import 'package:logitx/ui/logger_overlay_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

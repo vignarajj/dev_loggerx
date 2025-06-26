@@ -4,11 +4,11 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:logit/logit.dart';
-import 'package:logit/models/api_log_model.dart';
-import 'package:logit/models/debug_log_model.dart';
-import 'package:logit/models/dev_log_model.dart';
-import 'package:logit/models/log_enums.dart';
+import 'package:logitx/logit.dart';
+import 'package:logitx/models/api_log_model.dart';
+import 'package:logitx/models/debug_log_model.dart';
+import 'package:logitx/models/dev_log_model.dart';
+import 'package:logitx/models/log_enums.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -445,7 +445,7 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
                     : Padding(
                       padding: const EdgeInsets.only(left: 12.0),
                       child: const Text(
-                          'LOGIT',
+                          'LOGITX',
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                     ),

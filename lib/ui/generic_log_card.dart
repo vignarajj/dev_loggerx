@@ -1,6 +1,6 @@
-import 'package:logit/models/debug_log_model.dart';
-import 'package:logit/models/dev_log_model.dart';
-import 'package:logit/models/log_enums.dart';
+import 'package:logitx/models/debug_log_model.dart';
+import 'package:logitx/models/dev_log_model.dart';
+import 'package:logitx/models/log_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'seconds_ago_messages.dart';

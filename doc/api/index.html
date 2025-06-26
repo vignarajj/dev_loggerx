@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="logit API docs, for the Dart programming language.">
-  <title>logit - Dart API docs</title>
+  <meta name="description" content="logitx API docs, for the Dart programming language.">
+  <title>logitx - Dart API docs</title>
 
 
   
@@ -24,9 +24,9 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="https://vignaraj.dev">logit package</a></li>
+    <li><a href="https://vignaraj.dev">logitx package</a></li>
   </ol>
-  <div class="self-name">logit</div>
+  <div class="self-name">logitx</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -55,7 +55,7 @@ For general information about developing packages, see the Dart guide for
 and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/to/develop-packages). 
 -->
-<h1 id="logit-flutter-plugin">LogIt Flutter Plugin</h1>
+<h1 id="logitx-flutter-plugin">LogitX Flutter Plugin</h1>
 <p>A developer-friendly Flutter plugin to capture, view, and manage logs inside your app. Supports Debug, Logs, and API logs.</p>
 <h2 id="features">Features</h2>
 <ul>
@@ -76,13 +76,13 @@ and the Flutter guide for
 <h2 id="getting-started">Getting Started</h2>
 <h3 id="1-add-dependency">1. Add Dependency</h3>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  logit: ^1.0.0
+  logitx: ^1.0.0
 </code></pre>
 <h3 id="2-initialize-in-main">2. Initialize in main()</h3>
 <pre class="language-dart"><code class="language-dart">import 'package:logit/logit.dart';
 
 void main() {
-  LogIt.init(const LogItConfig(
+  Logit.init(const LoggerConfig(
     enableInDebug: true,
     allowedIds: ['test@dev.com'],
     enableLongPressGesture: true,
@@ -96,20 +96,44 @@ void main() {
 <pre class="language-dart"><code class="language-dart">@override
 void initState() {
   super.initState();
-  LogIt.attachOverlay(context);
+  Logit.attachOverlay(context);
 }
 </code></pre>
 <h3 id="4-log-messages">4. Log Messages</h3>
-<pre class="language-dart"><code class="language-dart">LogIt.debug('Debug message');
-LogIt.api('GET', 'https://api.example.com', headers: {}, body: {}, statusCode: 200);
-LogIt.log('General log message');
+<pre class="language-dart"><code class="language-dart">Logit.debug('Debug message');
+Logit.api('GET', 'https://api.example.com', headers: {}, body: {}, statusCode: 200);
+Logit.log('General log message');
 </code></pre>
+<h2 id="screenshots">Screenshots</h2>
+<p>Below are some screenshots showcasing the functionality of this plugin:</p>
+<table>
+<tbody><tr>
+<td><img src="screenshots/Screenshot_20250626-121919.png" alt="Screenshot 1" width="200"></td>
+<td><img src="screenshots/Screenshot_20250626-121933.png" alt="Screenshot 2" width="200"></td>
+<td><img src="screenshots/Screenshot_20250626-121957.png" alt="Screenshot 3" width="200"></td>
+</tr>
+<tr>
+<td><img src="screenshots/Screenshot_20250626-122007.png" alt="Screenshot 4" width="200"></td>
+<td><img src="screenshots/Screenshot_20250626-122028.png" alt="Screenshot 5" width="200"></td>
+<td><img src="screenshots/Screenshot_20250626-122039.png" alt="Screenshot 6" width="200"></td>
+</tr>
+<tr>
+<td><img src="screenshots/Screenshot_20250626-122048.png" alt="Screenshot 7" width="200"></td>
+<td><img src="screenshots/Screenshot_20250626-122100.png" alt="Screenshot 8" width="200"></td>
+<td><img src="screenshots/Screenshot_20250626-122128.png" alt="Screenshot 9" width="200"></td>
+</tr>
+</tbody></table>
 <h2 id="export-logs">Export Logs</h2>
 <p>Logs can be exported in JSON or plain text format using the export modal.</p>
 <h2 id="contributing">Contributing</h2>
 <p>Contributions are welcome! Please follow the guidelines in CONTRIBUTING.md.</p>
 <h2 id="license">License</h2>
 <p>This project is licensed under the MIT License. See LICENSE for details.</p>
+<h2 id="additional-information">Additional Information</h2>
+<ul>
+<li>For more details on the API, check out the <a href="doc/api/index.html">API Documentation</a>.</li>
+<li>If you find any issues or have a feature request, please file them on the <a href="https://github.com/vignarajj/dev_loggerx">GitHub repository</a>.</li>
+</ul>
 </section>
 
 
@@ -118,13 +142,6 @@ LogIt.log('General log message');
         <dl>
           <dt id="config">
   <span class="name"><a href="config_config/">config/config</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="core">
-  <span class="name"><a href="core_core/">core/core</a></span> 
 
 </dt>
 <dd>
@@ -260,14 +277,13 @@ LogIt.log('General log message');
   </form>
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-    <li><a href="https://vignaraj.dev">logit package</a></li>
+    <li><a href="https://vignaraj.dev">logitx package</a></li>
 </ol>
 
-    <h5 class="hidden-xs"><span class="package-name">logit</span> <span class="package-kind">package</span></h5>
+    <h5 class="hidden-xs"><span class="package-name">logitx</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
       <li><a href="config_config/">config/config</a></li>
-      <li><a href="core_core/">core/core</a></li>
       <li><a href="logit/">logit</a></li>
       <li><a href="models_api_log_model/">models/api_log_model</a></li>
       <li><a href="models_debug_log_model/">models/debug_log_model</a></li>
@@ -293,7 +309,7 @@ LogIt.log('General log message');
 </main>
 <footer>
   <span class="no-break">
-    logit
+    logitx
       1.0.0
   </span>
   

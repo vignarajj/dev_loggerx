@@ -1,4 +1,4 @@
-import 'package:logit/logit.dart';
+import 'package:logitx/logit.dart';
 import 'package:test/test.dart';
 
 void main() {

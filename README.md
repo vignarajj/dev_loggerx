@@ -11,7 +11,7 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/to/develop-packages). 
 -->
 
-# Logit Flutter Plugin
+# LogitX Flutter Plugin
 
 A developer-friendly Flutter plugin to capture, view, and manage logs inside your app. Supports Debug, Logs, and API logs.
 
@@ -35,7 +35,7 @@ A developer-friendly Flutter plugin to capture, view, and manage logs inside you
 ### 1. Add Dependency
 ```yaml
 dependencies:
-  logit: ^1.0.0
+  logitx: ^1.0.0
 ```
 
 ### 2. Initialize in main()
