@@ -73,15 +73,23 @@ Logit.log('General log message');
 ## Screenshots
 Below are some screenshots showcasing the functionality of this plugin:
 
-![Screenshot 1](screenshots/Screenshot_20250626-121919.png)
-![Screenshot 2](screenshots/Screenshot_20250626-121933.png)
-![Screenshot 3](screenshots/Screenshot_20250626-121957.png)
-![Screenshot 4](screenshots/Screenshot_20250626-122007.png)
-![Screenshot 5](screenshots/Screenshot_20250626-122028.png)
-![Screenshot 6](screenshots/Screenshot_20250626-122039.png)
-![Screenshot 7](screenshots/Screenshot_20250626-122048.png)
-![Screenshot 8](screenshots/Screenshot_20250626-122100.png)
-![Screenshot 9](screenshots/Screenshot_20250626-122128.png)
+<table>
+  <tr>
+    <td><img src="screenshots/Screenshot_20250626-121919.png" alt="Screenshot 1" width="200"></td>
+    <td><img src="screenshots/Screenshot_20250626-121933.png" alt="Screenshot 2" width="200"></td>
+    <td><img src="screenshots/Screenshot_20250626-121957.png" alt="Screenshot 3" width="200"></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/Screenshot_20250626-122007.png" alt="Screenshot 4" width="200"></td>
+    <td><img src="screenshots/Screenshot_20250626-122028.png" alt="Screenshot 5" width="200"></td>
+    <td><img src="screenshots/Screenshot_20250626-122039.png" alt="Screenshot 6" width="200"></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/Screenshot_20250626-122048.png" alt="Screenshot 7" width="200"></td>
+    <td><img src="screenshots/Screenshot_20250626-122100.png" alt="Screenshot 8" width="200"></td>
+    <td><img src="screenshots/Screenshot_20250626-122128.png" alt="Screenshot 9" width="200"></td>
+  </tr>
+</table>
 
 ## Export Logs
 Logs can be exported in JSON or plain text format using the export modal.
