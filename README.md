@@ -104,3 +104,10 @@ This project is licensed under the MIT License. See LICENSE for details.
 
 - For more details on the API, check out the [API Documentation](doc/api/index.html).
 - If you find any issues or have a feature request, please file them on the [GitHub repository](https://github.com/vignarajj/dev_loggerx).
+
+## Platform Support
+This plugin supports the following platforms:
+
+- **Android**
+- **iOS**
+- **Web**

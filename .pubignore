@@ -1,0 +1,13 @@
+# Exclude IDE, build, and local tool files from pub.dev package
+.cursor/
+.idea/
+build/
+bin/theme.dart
+*.iml
+*.log
+*.tmp
+*.swp
+.DS_Store
+# Exclude test cache and native asset build artifacts
+build/test_cache/
+build/native_assets/

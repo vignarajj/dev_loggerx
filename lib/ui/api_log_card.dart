@@ -41,7 +41,7 @@ class ApiLogCardState extends State<ApiLogCard> {
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: borderColor.withOpacity(0.4), width: 1.2),
+        side: BorderSide(color: borderColor.withAlpha(60), width: 1.2),
       ),
       child: InkWell(
         onLongPress: () {
@@ -226,7 +226,7 @@ class _SectionHeader extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
         margin: const EdgeInsets.only(top: 8, bottom: 2),
         decoration: BoxDecoration(
-          color: (color ?? Colors.blueAccent).withOpacity(0.08),
+          color: (color ?? Colors.blueAccent).withAlpha(80),
           borderRadius: BorderRadius.circular(6),
         ),
         child: Row(
