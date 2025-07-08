@@ -1,6 +1,6 @@
 name: logitx
 description: A developer-friendly Flutter plugin to capture, view, and manage logs inside your app. Supports Debug, Logs, and API logs.
-version: 1.0.2
+version: 1.0.3
 repository: https://github.com/vignarajj/dev_loggerx
 homepage: https://vignaraj.dev
 

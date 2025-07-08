@@ -39,39 +39,16 @@ class LoggerService extends Notifier<List<DevLogModel>> {
 
   @override
   List<DevLogModel> build() {
-    // You may want to load from Hive here if persistence is enabled
+    // Load persisted logs if available
+    if (_hiveInitialized) {
+      try {
+        final box = Hive.box<DevLogModel>(_boxName);
+        return box.values.toList();
+      } catch (e) {
+        print('Failed to load persisted logs: $e');
+      }
+    }
     return [];
-  }
-
-  /// Add a debug log entry.
-  void addDebugLog({
-    required String heading,
-    required String content,
-    required DebugLogLevel level,
-  }) {
-    final log = DebugLogModel(
-      id: _uuid.v4(),
-      timestamp: DateTime.now(),
-      heading: heading,
-      content: content,
-      level: level.name,
-    );
-    state = [...state, log];
-  }
-
-  /// Add a generic log entry.
-  void addLog({
-    required String heading,
-    required String content,
-  }) {
-    final log = DevLogModel(
-      id: _uuid.v4(),
-      timestamp: DateTime.now(),
-      type: 'log',
-      heading: heading,
-      content: content,
-    );
-    state = [...state, log];
   }
 
   void addApiLog({
@@ -99,9 +76,75 @@ class LoggerService extends Notifier<List<DevLogModel>> {
       memoryUsage: memoryUsage,
     );
     state = [...state, log];
+    _persistLog(log);
+  }
+
+  /// Add a debug log entry.
+  void addDebugLog({
+    required String heading,
+    required String content,
+    required DebugLogLevel level,
+  }) {
+    final log = DebugLogModel(
+      id: _uuid.v4(),
+      timestamp: DateTime.now(),
+      heading: heading,
+      content: content,
+      level: level.name,
+    );
+    state = [...state, log];
+    _persistLog(log);
+  }
+
+  /// Add a generic log entry.
+  void addLog({
+    required String heading,
+    required String content,
+  }) {
+    final log = DevLogModel(
+      id: _uuid.v4(),
+      timestamp: DateTime.now(),
+      type: 'log',
+      heading: heading,
+      content: content,
+    );
+    state = [...state, log];
+    _persistLog(log);
+  }
+
+  /// Persist log to Hive if persistence is enabled
+  void _persistLog(DevLogModel log) {
+    if (_hiveInitialized) {
+      try {
+        final box = Hive.box<DevLogModel>(_boxName);
+        box.add(log);
+      } catch (e) {
+        print('Failed to persist log: $e');
+      }
+    }
   }
 
   void clearLogs() {
     state = [];
+    if (_hiveInitialized) {
+      try {
+        final box = Hive.box<DevLogModel>(_boxName);
+        box.clear();
+      } catch (e) {
+        print('Failed to clear persisted logs: $e');
+      }
+    }
+  }
+
+  /// Load logs from persistence on initialization
+  void loadPersistedLogs() {
+    if (_hiveInitialized) {
+      try {
+        final box = Hive.box<DevLogModel>(_boxName);
+        state = box.values.toList();
+      } catch (e) {
+        print('Failed to load persisted logs: $e');
+      }
+    }
   }
 }

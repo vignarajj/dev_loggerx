@@ -33,7 +33,8 @@ class ApiLogCardState extends State<ApiLogCard> {
   Widget build(BuildContext context) {
     final log = widget.apiLog;
     final isError = log.statusCode != null && log.statusCode! >= 400;
-    final cardColor = widget.isHighlighted ? Colors.blueGrey[800] : Colors.grey[900];
+    final cardColor =
+        widget.isHighlighted ? Colors.blueGrey[800] : Colors.grey[900];
     final borderColor = isError ? Colors.redAccent : Colors.blueAccent;
 
     return Card(
@@ -58,7 +59,8 @@ class ApiLogCardState extends State<ApiLogCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: Colors.blueAccent,
                       borderRadius: BorderRadius.circular(6),
@@ -142,26 +144,32 @@ class ApiLogCardState extends State<ApiLogCard> {
               _SectionHeader(
                 title: 'Request',
                 expanded: _expandedRequest,
-                onTap: () => setState(() => _expandedRequest = !_expandedRequest),
+                onTap: () =>
+                    setState(() => _expandedRequest = !_expandedRequest),
               ),
               if (_expandedRequest)
                 _ApiSectionBody(
                   children: [
-                    _ApiDetailRow(label: 'Headers', value: _prettyPrintJson(log.headers)),
-                    _ApiDetailRow(label: 'Body', value: _prettyPrintJson(log.body)),
+                    _ApiDetailRow(
+                        label: 'Headers', value: _prettyPrintJson(log.headers)),
+                    _ApiDetailRow(
+                        label: 'Body', value: _prettyPrintJson(log.body)),
                   ],
                 ),
               // Response Section
               _SectionHeader(
                 title: 'Response',
                 expanded: _expandedResponse,
-                onTap: () => setState(() => _expandedResponse = !_expandedResponse),
+                onTap: () =>
+                    setState(() => _expandedResponse = !_expandedResponse),
               ),
               if (_expandedResponse)
                 _ApiSectionBody(
                   children: [
-                    _ApiDetailRow(label: 'Headers', value: _prettyPrintJson(log.headers)),
-                    _ApiDetailRow(label: 'Body', value: _prettyPrintJson(log.content)),
+                    _ApiDetailRow(
+                        label: 'Headers', value: _prettyPrintJson(log.headers)),
+                    _ApiDetailRow(
+                        label: 'Body', value: _prettyPrintJson(log.content)),
                   ],
                 ),
               // Error Section (if error)
@@ -320,4 +328,3 @@ class _ApiDetailRow extends StatelessWidget {
     );
   }
 }
-

@@ -92,17 +92,72 @@ void main() {
   runApp(const MyApp());
 }
 </code></pre>
-<h3 id="3-attach-logger-overlay">3. Attach Logger Overlay</h3>
-<pre class="language-dart"><code class="language-dart">@override
-void initState() {
-  super.initState();
-  Logit.attachOverlay(context);
-}
+<h3 id="3-initialize-the-provider-container">3. Initialize the Provider Container</h3>
+<pre class="language-dart"><code class="language-dart">WidgetsBinding.instance.addPostFrameCallback((_) {
+      LogitCore.attachLongPress(context, userId: 'test@dev.com');
+      // Initialize provider container for API logging
+      if (LogitCore.container == null) {
+        final container = ProviderScope.containerOf(context);
+        LogitCore.initializeProviderContainer(container);
+        // Also initialize LoggerDio's container
+        LoggerDio.initializeProviderContainer(container);
+      }
+    });
 </code></pre>
 <h3 id="4-log-messages">4. Log Messages</h3>
 <pre class="language-dart"><code class="language-dart">Logit.debug('Debug message');
 Logit.api('GET', 'https://api.example.com', headers: {}, body: {}, statusCode: 200);
 Logit.log('General log message');
+</code></pre>
+<h3 id="5-dio-integration">5. Dio Integration</h3>
+<pre class="language-dart"><code class="language-dart">final dio = Dio();
+dio.interceptors.add(LoggerDio());  // Add the logger interceptor
+
+// All API calls will be automatically logged
+final response = await dio.get('https://api.example.com/data');
+</code></pre>
+<h2 id="testing">Testing</h2>
+<p>The plugin includes comprehensive test coverage for all logging functionality:</p>
+<h3 id="unit-tests">Unit Tests</h3>
+<pre class="language-dart"><code class="language-dart">void main() {
+  test('should log API call', () {
+    // Initialize logger for testing
+    Logit.init(const LoggerConfig(
+      enableInDebug: true,
+      enablePersistence: false,
+    ));
+
+    // Perform logging
+    Logit.api(
+      heading: 'Test API',
+      content: 'Response data',
+      method: 'GET',
+      url: 'https://api.test.com',
+      headers: {},
+    );
+
+    // Assert logs were created
+    final logs = LogitCore.instance.logs;
+    expect(logs.length, 1);
+    expect(logs.first.heading, 'Test API');
+  });
+}
+</code></pre>
+<h3 id="testing-with-dio-interceptor">Testing with Dio Interceptor</h3>
+<p>The <code>LoggerDio</code> interceptor can be tested independently:</p>
+<pre class="language-dart"><code class="language-dart">test('should log Dio API calls', () {
+  final loggerDio = LoggerDio();
+  final requestOptions = RequestOptions(
+    path: '/test',
+    method: 'GET',
+  );
+  
+  // Test request logging
+  loggerDio.onRequest(requestOptions, RequestInterceptorHandler());
+  
+  // Verify timing information is added
+  expect(requestOptions.extra['devLoggerStartTime'], isA&lt;DateTime&gt;());
+});
 </code></pre>
 <h2 id="screenshots">Screenshots</h2>
 <p>Below are some screenshots showcasing the functionality of this plugin:</p>
@@ -133,6 +188,13 @@ Logit.log('General log message');
 <ul>
 <li>For more details on the API, check out the <a href="doc/api/index.html">API Documentation</a>.</li>
 <li>If you find any issues or have a feature request, please file them on the <a href="https://github.com/vignarajj/dev_loggerx">GitHub repository</a>.</li>
+</ul>
+<h2 id="platform-support">Platform Support</h2>
+<p>This plugin supports the following platforms:</p>
+<ul>
+<li><strong>Android</strong></li>
+<li><strong>iOS</strong></li>
+<li><strong>Web</strong></li>
 </ul>
 </section>
 
@@ -310,7 +372,7 @@ Logit.log('General log message');
 <footer>
   <span class="no-break">
     logitx
-      1.0.0
+      1.0.3
   </span>
   
 </footer>

@@ -9,6 +9,7 @@ void main() async {
   await LoggerService.initPersistenceIfNeeded(
     const LoggerConfig(enablePersistence: true),
   );
+
   // Initialize the logger with all config options
   Logit.init(
     const LoggerConfig(
@@ -19,7 +20,8 @@ void main() async {
       maxStoredLogs: 100,
     ),
   );
-  runApp(const ProviderScope(child: MyApp()));
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -27,13 +29,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'LogItX Example',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    return ProviderScope(
+      child: MaterialApp(
+        title: 'LogItX Example',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        ),
+        home: const MyHomePage(title: 'LogItX Example'),
       ),
-      home: const MyHomePage(title: 'LogItX Example'),
     );
   }
 }
@@ -47,6 +51,13 @@ class MyHomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       LogitCore.attachLongPress(context, userId: 'test@dev.com');
+      // Initialize provider container for API logging
+      if (LogitCore.container == null) {
+        final container = ProviderScope.containerOf(context);
+        LogitCore.initializeProviderContainer(container);
+        // Also initialize LoggerDio's container
+        LoggerDio.initializeProviderContainer(container);
+      }
     });
     return Scaffold(
       appBar: AppBar(title: Text(title)),
@@ -62,7 +73,7 @@ class MyHomePage extends ConsumerWidget {
           /// Test: Log a debug/info message
           ElevatedButton(
             onPressed: () {
-              Logit.debug(ref, 'Debug Test', 'This is a debug/info log.');
+              Logit.debug('Debug Test', 'This is a debug/info log.');
             },
             child: const Text('Log Debug/Info'),
           ),
@@ -70,7 +81,7 @@ class MyHomePage extends ConsumerWidget {
           /// Test: Log an error message
           ElevatedButton(
             onPressed: () {
-              Logit.error(ref, 'Error Test', 'This is an error log.');
+              Logit.error('Error Test', 'This is an error log.');
             },
             child: const Text('Log Error'),
           ),
@@ -92,7 +103,6 @@ class MyHomePage extends ConsumerWidget {
           ElevatedButton(
             onPressed: () {
               Logit.api(
-                ref: ref,
                 heading: 'Manual API Log',
                 content: '{"result": "ok"}',
                 method: 'GET',
@@ -109,7 +119,7 @@ class MyHomePage extends ConsumerWidget {
           ElevatedButton(
             onPressed: () async {
               final dio = Dio();
-              dio.interceptors.add(LoggerDio(ref));
+              dio.interceptors.add(LoggerDio());
               try {
                 await dio.get('https://jsonplaceholder.typicode.com/posts/1');
               } catch (_) {}
@@ -120,7 +130,7 @@ class MyHomePage extends ConsumerWidget {
           /// Test: Log an API call using http
           ElevatedButton(
             onPressed: () async {
-              final client = Logit.wrapHttp(ref);
+              final client = Logit.wrapHttp();
               try {
                 await client.get(
                   Uri.parse('https://jsonplaceholder.typicode.com/posts/2'),

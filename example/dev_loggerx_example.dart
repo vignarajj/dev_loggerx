@@ -33,6 +33,8 @@ void main() async {
       maxStoredLogs: 100,
     ),
   );
+  final container = ProviderContainer();
+  LoggerDio.initializeProviderContainer(container);
   runApp(const ProviderScope(child: LoggerExampleApp()));
 }
 
@@ -75,7 +77,7 @@ class LoggerExampleHome extends ConsumerWidget {
           /// Test: Log a debug/info message
           ElevatedButton(
             onPressed: () {
-              Logit.debug(ref, 'Debug Test', 'This is a debug/info log.');
+              Logit.debug( 'Debug Test', 'This is a debug/info log.');
             },
             child: const Text('Log Debug/Info'),
           ),
@@ -83,7 +85,7 @@ class LoggerExampleHome extends ConsumerWidget {
           /// Test: Log an error message
           ElevatedButton(
             onPressed: () {
-              Logit.error(ref, 'Error Test', 'This is an error log.');
+              Logit.error( 'Error Test', 'This is an error log.');
             },
             child: const Text('Log Error'),
           ),
@@ -105,7 +107,6 @@ class LoggerExampleHome extends ConsumerWidget {
           ElevatedButton(
             onPressed: () {
               Logit.api(
-                ref: ref,
                 heading: 'Manual API Log',
                 content: '{"result": "ok"}',
                 method: 'GET',
@@ -122,7 +123,7 @@ class LoggerExampleHome extends ConsumerWidget {
           ElevatedButton(
             onPressed: () async {
               final dio = Dio();
-              dio.interceptors.add(LoggerDio(ref));
+              dio.interceptors.add(LoggerDio());
               try {
                 await dio.get('https://jsonplaceholder.typicode.com/posts/1');
               } catch (_) {}

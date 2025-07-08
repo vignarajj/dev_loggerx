@@ -55,8 +55,7 @@
     <section class="multi-line-signature">
       
 <span class="returntype"><a href="../../services_logger_http/LoggerHttp-class.html">LoggerHttp</a></span>
-<span class="name ">wrapHttp</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="wrapHttp-param-ref"><span class="type-annotation"><a href="https://pub.dev/documentation/flutter_riverpod/2.6.1/flutter_riverpod/WidgetRef-class.html">WidgetRef</a></span> <span class="parameter-name">ref</span>, [</span></li>
-<li><span class="parameter" id="wrapHttp-param-client"><span class="type-annotation">dynamic</span> <span class="parameter-name">client</span></span></li>
+<span class="name ">wrapHttp</span>(<wbr>[<ol class="parameter-list single-line"> <li><span class="parameter" id="wrapHttp-param-client"><span class="type-annotation">dynamic</span> <span class="parameter-name">client</span></span></li>
 </ol>])
 
       
@@ -71,8 +70,8 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static LoggerHttp wrapHttp(WidgetRef ref, [dynamic client]) {
-  return LoggerHttp(ref, client);
+  <pre class="language-dart"><code class="language-dart">static LoggerHttp wrapHttp([dynamic client]) {
+  return LoggerHttp(client);
 }</code></pre>
 </section>
 
@@ -101,7 +100,7 @@
 <footer>
   <span class="no-break">
     logitx
-      1.0.0
+      1.0.3
   </span>
   
 </footer>

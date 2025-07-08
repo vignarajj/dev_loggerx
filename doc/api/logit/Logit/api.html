@@ -55,8 +55,7 @@
     <section class="multi-line-signature">
       
 <span class="returntype">void</span>
-<span class="name ">api</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="api-param-ref"><span>required</span> <span class="type-annotation"><a href="https://pub.dev/documentation/flutter_riverpod/2.6.1/flutter_riverpod/WidgetRef-class.html">WidgetRef</a></span> <span class="parameter-name">ref</span>, </span></li>
-<li><span class="parameter" id="api-param-heading"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">heading</span>, </span></li>
+<span class="name ">api</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="api-param-heading"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">heading</span>, </span></li>
 <li><span class="parameter" id="api-param-content"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">content</span>, </span></li>
 <li><span class="parameter" id="api-param-method"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">method</span>, </span></li>
 <li><span class="parameter" id="api-param-url"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">url</span>, </span></li>
@@ -80,7 +79,6 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static void api({
-  required WidgetRef ref,
   required String heading,
   required String content,
   required String method,
@@ -91,7 +89,7 @@
   Duration? timings,
   int? memoryUsage,
 }) {
-  ref.read(loggerProvider.notifier).addApiLog(
+  LogitCore.container?.read(loggerProvider.notifier).addApiLog(
         heading: heading,
         content: content,
         method: method,
@@ -130,7 +128,7 @@
 <footer>
   <span class="no-break">
     logitx
-      1.0.0
+      1.0.3
   </span>
   
 </footer>

@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the read method from the DevLogModelAdapter class, for the Dart programming language.">
-  <title>read method - DevLogModelAdapter class - dev_log_model library - Dart API</title>
+  <meta name="description" content="API docs for the initializeProviderContainer method from the Logit class, for the Dart programming language.">
+  <title>initializeProviderContainer method - Logit class - logit library - Dart API</title>
 
 
   
@@ -25,11 +25,11 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">logitx</a></li>
-    <li><a href="../../models_dev_log_model/">models&#47;dev_log_model.dart</a></li>
-    <li><a href="../../models_dev_log_model/DevLogModelAdapter-class.html">DevLogModelAdapter</a></li>
-    <li class="self-crumb">read method</li>
+    <li><a href="../../logit/">logit.dart</a></li>
+    <li><a href="../../logit/Logit-class.html">Logit</a></li>
+    <li class="self-crumb">initializeProviderContainer static method</li>
   </ol>
-  <div class="self-name">read</div>
+  <div class="self-name">initializeProviderContainer</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -46,48 +46,33 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="models_dev_log_model&#47;DevLogModelAdapter-class-sidebar.html"
+    data-above-sidebar="logit&#47;Logit-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">read</span> method 
+<h1><span class="kind-method">initializeProviderContainer</span> static method 
 </h1></div>
 
     <section class="multi-line-signature">
       
-  <div>
-    <ol class="annotation-list">
-        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
-    </ol>
-  </div>
-<span class="returntype"><a href="../../models_dev_log_model/DevLogModel-class.html">DevLogModel</a></span>
-<span class="name ">read</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="read-param-reader"><span class="type-annotation"><a href="https://pub.dev/documentation/hive/2.2.3/hive/BinaryReader-class.html">BinaryReader</a></span> <span class="parameter-name">reader</span></span></li>
+<span class="returntype">void</span>
+<span class="name ">initializeProviderContainer</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="initializeProviderContainer-param-container"><span class="type-annotation"><a href="https://pub.dev/documentation/riverpod/2.6.1/riverpod/ProviderContainer-class.html">ProviderContainer</a></span> <span class="parameter-name">container</span></span></li>
 </ol>)
 
-      <div class="features"><span class="feature">override</span></div>
+      
 
     </section>
     
 <section class="desc markdown">
-  <p>Is called when a value has to be decoded.</p>
+  <p>Initialize a provider container for service classes</p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@override
-DevLogModel read(BinaryReader reader) {
-  final numOfFields = reader.readByte();
-  final fields = &lt;int, dynamic&gt;{
-    for (int i = 0; i &lt; numOfFields; i++) reader.readByte(): reader.read(),
-  };
-  return DevLogModel(
-    id: fields[0] as String,
-    timestamp: fields[1] as DateTime,
-    type: fields[2] as String,
-    heading: fields[3] as String,
-    content: fields[4] as String,
-  );
+  <pre class="language-dart"><code class="language-dart">static void initializeProviderContainer(ProviderContainer container) {
+  LogitCore.initializeProviderContainer(container);
+  LoggerDio.initializeProviderContainer(container);
 }</code></pre>
 </section>
 
@@ -102,12 +87,12 @@ DevLogModel read(BinaryReader reader) {
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">logitx</a></li>
-    <li><a href="../../models_dev_log_model/">dev_log_model</a></li>
-    <li><a href="../../models_dev_log_model/DevLogModelAdapter-class.html">DevLogModelAdapter</a></li>
-    <li class="self-crumb">read method</li>
+    <li><a href="../../logit/">logit</a></li>
+    <li><a href="../../logit/Logit-class.html">Logit</a></li>
+    <li class="self-crumb">initializeProviderContainer static method</li>
 </ol>
 
-    <h5>DevLogModelAdapter class</h5>
+    <h5>Logit class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">

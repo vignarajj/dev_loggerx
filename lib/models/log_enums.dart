@@ -2,8 +2,10 @@
 enum DebugLogLevel {
   /// Informational/debug message.
   info,
+
   /// Warning message.
   warning,
+
   /// Error message.
   error,
 }
@@ -12,8 +14,10 @@ enum DebugLogLevel {
 enum DevLogType {
   /// Debug log (info, warning, error).
   debug,
+
   /// Generic log.
   log,
+
   /// API log (request/response).
   api,
 }

@@ -82,18 +82,18 @@ void onError(DioException err, ErrorInterceptorHandler handler) {
       err.requestOptions.extra[&#39;devLoggerStartTime&#39;] as DateTime?;
   final endTime = DateTime.now();
   final duration = startTime != null ? endTime.difference(startTime) : null;
-  ref.read(loggerProvider.notifier).addApiLog(
-        heading:
-            &#39;[${err.requestOptions.method}] ${err.requestOptions.uri} (ERROR)&#39;,
-        content: err.toString(),
-        method: err.requestOptions.method,
-        url: err.requestOptions.uri.toString(),
-        headers: err.requestOptions.headers,
-        body: err.requestOptions.data,
-        statusCode: err.response?.statusCode,
-        timings: duration,
-        memoryUsage: null,
-      );
+
+  _logApiResponse(
+    heading: &#39;[${err.requestOptions.method}] ${err.requestOptions.uri}&#39;,
+    content: err.message ?? &#39;Error&#39;,
+    method: err.requestOptions.method,
+    url: err.requestOptions.uri.toString(),
+    headers: err.requestOptions.headers,
+    body: err.requestOptions.data,
+    statusCode: err.response?.statusCode,
+    timings: duration,
+  );
+
   super.onError(err, handler);
 }</code></pre>
 </section>
@@ -123,7 +123,7 @@ void onError(DioException err, ErrorInterceptorHandler handler) {
 <footer>
   <span class="no-break">
     logitx
-      1.0.0
+      1.0.3
   </span>
   
 </footer>

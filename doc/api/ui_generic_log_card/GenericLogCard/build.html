@@ -112,21 +112,26 @@ Widget build(BuildContext context) {
       child: ListTile(
         title: Text(
           log.heading,
-          style: const TextStyle(color: Colors.white, fontFamily: &#39;RobotoMono&#39;),
+          style:
+              const TextStyle(color: Colors.white, fontFamily: &#39;RobotoMono&#39;),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               formatTimestamp(log.timestamp),
-              style: const TextStyle(color: Colors.white38, fontSize: 12, fontFamily: &#39;RobotoMono&#39;),
+              style: const TextStyle(
+                  color: Colors.white38,
+                  fontSize: 12,
+                  fontFamily: &#39;RobotoMono&#39;),
             ),
             const SizedBox(height: 2),
             Text(
               log.content,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(color: Colors.white70, fontFamily: &#39;RobotoMono&#39;),
+              style: const TextStyle(
+                  color: Colors.white70, fontFamily: &#39;RobotoMono&#39;),
             ),
           ],
         ),
@@ -188,7 +193,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     logitx
-      1.0.0
+      1.0.3
   </span>
   
 </footer>

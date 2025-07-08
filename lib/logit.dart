@@ -31,6 +31,14 @@ class LogitCore {
   static OverlayEntry? _loggerOverlayEntry;
   static bool _overlayShown = false;
 
+  // Container for accessing providers outside the widget tree
+  static ProviderContainer? container;
+
+  /// Initialize the provider container for use in non-widget contexts
+  static void initializeProviderContainer(ProviderContainer coreContainer) {
+    container = coreContainer;
+  }
+
   /// Initialize the logger with the given configuration.
   static void init(LoggerConfig initialConfig) {
     config.value = initialConfig;
@@ -131,8 +139,8 @@ class Logit {
   static void init(LoggerConfig config) => LogitCore.init(config);
 
   /// Logs a debug/info message.
-  static void debug(WidgetRef ref, String heading, String content) {
-    ref.read(loggerProvider.notifier).addDebugLog(
+  static void debug(String heading, String content) {
+    LogitCore.container?.read(loggerProvider.notifier).addDebugLog(
           heading: heading,
           content: content,
           level: DebugLogLevel.info,
@@ -140,12 +148,11 @@ class Logit {
   }
 
   /// Logs an info message.
-  static void info(WidgetRef ref, String heading, String content) =>
-      debug(ref, heading, content);
+  static void info(String heading, String content) => debug(heading, content);
 
   /// Logs an error message.
-  static void error(WidgetRef ref, String heading, String content) {
-    ref.read(loggerProvider.notifier).addDebugLog(
+  static void error(String heading, String content) {
+    LogitCore.container?.read(loggerProvider.notifier).addDebugLog(
           heading: heading,
           content: content,
           level: DebugLogLevel.error,
@@ -154,7 +161,6 @@ class Logit {
 
   /// Logs an API request/response manually.
   static void api({
-    required WidgetRef ref,
     required String heading,
     required String content,
     required String method,
@@ -165,7 +171,7 @@ class Logit {
     Duration? timings,
     int? memoryUsage,
   }) {
-    ref.read(loggerProvider.notifier).addApiLog(
+    LogitCore.container?.read(loggerProvider.notifier).addApiLog(
           heading: heading,
           content: content,
           method: method,
@@ -179,7 +185,13 @@ class Logit {
   }
 
   /// Wraps an http.Client to enable API logging.
-  static LoggerHttp wrapHttp(WidgetRef ref, [dynamic client]) {
-    return LoggerHttp(ref, client);
+  static LoggerHttp wrapHttp([dynamic client]) {
+    return LoggerHttp(client);
+  }
+
+  /// Initialize a provider container for service classes
+  static void initializeProviderContainer(ProviderContainer container) {
+    LogitCore.initializeProviderContainer(container);
+    LoggerDio.initializeProviderContainer(container);
   }
 }

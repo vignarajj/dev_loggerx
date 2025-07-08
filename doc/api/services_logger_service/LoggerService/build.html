@@ -82,7 +82,15 @@ executions of <a href="../../services_logger_service/LoggerService/build.html">b
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 List&lt;DevLogModel&gt; build() {
-  &#47;&#47; You may want to load from Hive here if persistence is enabled
+  &#47;&#47; Load persisted logs if available
+  if (_hiveInitialized) {
+    try {
+      final box = Hive.box&lt;DevLogModel&gt;(_boxName);
+      return box.values.toList();
+    } catch (e) {
+      print(&#39;Failed to load persisted logs: $e&#39;);
+    }
+  }
   return [];
 }</code></pre>
 </section>
@@ -112,7 +120,7 @@ List&lt;DevLogModel&gt; build() {
 <footer>
   <span class="no-break">
     logitx
-      1.0.0
+      1.0.3
   </span>
   
 </footer>

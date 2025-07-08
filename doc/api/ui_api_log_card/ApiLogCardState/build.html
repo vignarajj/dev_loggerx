@@ -178,7 +178,8 @@ prints green, as expected.</p>
 Widget build(BuildContext context) {
   final log = widget.apiLog;
   final isError = log.statusCode != null &amp;&amp; log.statusCode! &gt;= 400;
-  final cardColor = widget.isHighlighted ? Colors.blueGrey[800] : Colors.grey[900];
+  final cardColor =
+      widget.isHighlighted ? Colors.blueGrey[800] : Colors.grey[900];
   final borderColor = isError ? Colors.redAccent : Colors.blueAccent;
 
   return Card(
@@ -186,7 +187,7 @@ Widget build(BuildContext context) {
     margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(16),
-      side: BorderSide(color: borderColor.withOpacity(0.4), width: 1.2),
+      side: BorderSide(color: borderColor.withAlpha(60), width: 1.2),
     ),
     child: InkWell(
       onLongPress: () {
@@ -203,7 +204,8 @@ Widget build(BuildContext context) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: Colors.blueAccent,
                     borderRadius: BorderRadius.circular(6),
@@ -287,26 +289,32 @@ Widget build(BuildContext context) {
             _SectionHeader(
               title: &#39;Request&#39;,
               expanded: _expandedRequest,
-              onTap: () =&gt; setState(() =&gt; _expandedRequest = !_expandedRequest),
+              onTap: () =&gt;
+                  setState(() =&gt; _expandedRequest = !_expandedRequest),
             ),
             if (_expandedRequest)
               _ApiSectionBody(
                 children: [
-                  _ApiDetailRow(label: &#39;Headers&#39;, value: _prettyPrintJson(log.headers)),
-                  _ApiDetailRow(label: &#39;Body&#39;, value: _prettyPrintJson(log.body)),
+                  _ApiDetailRow(
+                      label: &#39;Headers&#39;, value: _prettyPrintJson(log.headers)),
+                  _ApiDetailRow(
+                      label: &#39;Body&#39;, value: _prettyPrintJson(log.body)),
                 ],
               ),
             &#47;&#47; Response Section
             _SectionHeader(
               title: &#39;Response&#39;,
               expanded: _expandedResponse,
-              onTap: () =&gt; setState(() =&gt; _expandedResponse = !_expandedResponse),
+              onTap: () =&gt;
+                  setState(() =&gt; _expandedResponse = !_expandedResponse),
             ),
             if (_expandedResponse)
               _ApiSectionBody(
                 children: [
-                  _ApiDetailRow(label: &#39;Headers&#39;, value: _prettyPrintJson(log.headers)),
-                  _ApiDetailRow(label: &#39;Body&#39;, value: _prettyPrintJson(log.content)),
+                  _ApiDetailRow(
+                      label: &#39;Headers&#39;, value: _prettyPrintJson(log.headers)),
+                  _ApiDetailRow(
+                      label: &#39;Body&#39;, value: _prettyPrintJson(log.content)),
                 ],
               ),
             &#47;&#47; Error Section (if error)
@@ -357,7 +365,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     logitx
-      1.0.0
+      1.0.3
   </span>
   
 </footer>

@@ -68,6 +68,14 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">void clearLogs() {
   state = [];
+  if (_hiveInitialized) {
+    try {
+      final box = Hive.box&lt;DevLogModel&gt;(_boxName);
+      box.clear();
+    } catch (e) {
+      print(&#39;Failed to clear persisted logs: $e&#39;);
+    }
+  }
 }</code></pre>
 </section>
 
@@ -96,7 +104,7 @@
 <footer>
   <span class="no-break">
     logitx
-      1.0.0
+      1.0.3
   </span>
   
 </footer>

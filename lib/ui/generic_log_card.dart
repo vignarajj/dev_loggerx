@@ -58,21 +58,26 @@ class GenericLogCard extends StatelessWidget {
         child: ListTile(
           title: Text(
             log.heading,
-            style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono'),
+            style:
+                const TextStyle(color: Colors.white, fontFamily: 'RobotoMono'),
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 formatTimestamp(log.timestamp),
-                style: const TextStyle(color: Colors.white38, fontSize: 12, fontFamily: 'RobotoMono'),
+                style: const TextStyle(
+                    color: Colors.white38,
+                    fontSize: 12,
+                    fontFamily: 'RobotoMono'),
               ),
               const SizedBox(height: 2),
               Text(
                 log.content,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(color: Colors.white70, fontFamily: 'RobotoMono'),
+                style: const TextStyle(
+                    color: Colors.white70, fontFamily: 'RobotoMono'),
               ),
             ],
           ),

@@ -55,8 +55,7 @@
     <section class="multi-line-signature">
       
 <span class="returntype">void</span>
-<span class="name ">info</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="info-param-ref"><span class="type-annotation"><a href="https://pub.dev/documentation/flutter_riverpod/2.6.1/flutter_riverpod/WidgetRef-class.html">WidgetRef</a></span> <span class="parameter-name">ref</span>, </span></li>
-<li><span class="parameter" id="info-param-heading"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">heading</span>, </span></li>
+<span class="name ">info</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="info-param-heading"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">heading</span>, </span></li>
 <li><span class="parameter" id="info-param-content"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">content</span></span></li>
 </ol>)
 
@@ -72,8 +71,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static void info(WidgetRef ref, String heading, String content) =&gt;
-    debug(ref, heading, content);</code></pre>
+  <pre class="language-dart"><code class="language-dart">static void info(String heading, String content) =&gt; debug(heading, content);</code></pre>
 </section>
 
 
@@ -101,7 +99,7 @@
 <footer>
   <span class="no-break">
     logitx
-      1.0.0
+      1.0.3
   </span>
   
 </footer>

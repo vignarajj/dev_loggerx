@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the read method from the DevLogModelAdapter class, for the Dart programming language.">
-  <title>read method - DevLogModelAdapter class - dev_log_model library - Dart API</title>
+  <meta name="description" content="API docs for the close method from the LoggerHttp class, for the Dart programming language.">
+  <title>close method - LoggerHttp class - logger_http library - Dart API</title>
 
 
   
@@ -25,11 +25,11 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">logitx</a></li>
-    <li><a href="../../models_dev_log_model/">models&#47;dev_log_model.dart</a></li>
-    <li><a href="../../models_dev_log_model/DevLogModelAdapter-class.html">DevLogModelAdapter</a></li>
-    <li class="self-crumb">read method</li>
+    <li><a href="../../services_logger_http/">services&#47;logger_http.dart</a></li>
+    <li><a href="../../services_logger_http/LoggerHttp-class.html">LoggerHttp</a></li>
+    <li class="self-crumb">close method</li>
   </ol>
-  <div class="self-name">read</div>
+  <div class="self-name">close</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -46,10 +46,10 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="models_dev_log_model&#47;DevLogModelAdapter-class-sidebar.html"
+    data-above-sidebar="services_logger_http&#47;LoggerHttp-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">read</span> method 
+<h1><span class="kind-method">close</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
@@ -59,16 +59,23 @@
         <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
     </ol>
   </div>
-<span class="returntype"><a href="../../models_dev_log_model/DevLogModel-class.html">DevLogModel</a></span>
-<span class="name ">read</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="read-param-reader"><span class="type-annotation"><a href="https://pub.dev/documentation/hive/2.2.3/hive/BinaryReader-class.html">BinaryReader</a></span> <span class="parameter-name">reader</span></span></li>
-</ol>)
+<span class="returntype">void</span>
+<span class="name ">close</span>(<wbr>)
 
       <div class="features"><span class="feature">override</span></div>
 
     </section>
     
 <section class="desc markdown">
-  <p>Is called when a value has to be decoded.</p>
+  <p>Closes the client and cleans up any resources associated with it.</p>
+<p>Some clients maintain a pool of network connections that will not be
+disconnected until the client is closed. This may cause programs using
+using the Dart SDK (<code>dart run</code>, <code>dart test</code>, <code>dart compile</code>, etc.) to
+not terminate until the client is closed. Programs run using the Flutter
+SDK can still terminate even with an active connection pool.</p>
+<p>Once <a href="../../services_logger_http/LoggerHttp/close.html">close</a> is called, no other methods should be called. If <a href="../../services_logger_http/LoggerHttp/close.html">close</a> is
+called while other asynchronous methods are running, the behavior is
+undefined.</p>
 </section>
 
 
@@ -76,18 +83,9 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
-DevLogModel read(BinaryReader reader) {
-  final numOfFields = reader.readByte();
-  final fields = &lt;int, dynamic&gt;{
-    for (int i = 0; i &lt; numOfFields; i++) reader.readByte(): reader.read(),
-  };
-  return DevLogModel(
-    id: fields[0] as String,
-    timestamp: fields[1] as DateTime,
-    type: fields[2] as String,
-    heading: fields[3] as String,
-    content: fields[4] as String,
-  );
+void close() {
+  _inner.close();
+  super.close();
 }</code></pre>
 </section>
 
@@ -102,12 +100,12 @@ DevLogModel read(BinaryReader reader) {
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">logitx</a></li>
-    <li><a href="../../models_dev_log_model/">dev_log_model</a></li>
-    <li><a href="../../models_dev_log_model/DevLogModelAdapter-class.html">DevLogModelAdapter</a></li>
-    <li class="self-crumb">read method</li>
+    <li><a href="../../services_logger_http/">logger_http</a></li>
+    <li><a href="../../services_logger_http/LoggerHttp-class.html">LoggerHttp</a></li>
+    <li class="self-crumb">close method</li>
 </ol>
 
-    <h5>DevLogModelAdapter class</h5>
+    <h5>LoggerHttp class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">

@@ -93,41 +93,40 @@ Future&lt;http.StreamedResponse&gt; send(http.BaseRequest request) async {
     final endTime = DateTime.now();
     final duration = endTime.difference(startTime);
     final responseBody = await http.Response.fromStream(response);
-    ref.read(loggerProvider.notifier).addApiLog(
-          heading: &#39;[${request.method}] ${request.url}&#39;,
-          content: responseBody.body,
-          method: request.method,
-          url: request.url.toString(),
-          headers: request.headers,
-          body: requestBody,
-          statusCode: response.statusCode,
-          timings: duration,
-          memoryUsage: null,
-        );
+    _logApiCall(
+      heading: &#39;[${request.method}] ${request.url}&#39;,
+      content: responseBody.body,
+      method: request.method,
+      url: request.url.toString(),
+      headers: request.headers,
+      body: requestBody,
+      statusCode: responseBody.statusCode,
+      timings: duration,
+    );
+    &#47;&#47; Return a new stream because we&#39;ve consumed the original one
     return http.StreamedResponse(
-      Stream.value(responseBody.bodyBytes),
-      response.statusCode,
-      contentLength: response.contentLength,
-      request: response.request,
+      http.ByteStream.fromBytes(responseBody.bodyBytes),
+      responseBody.statusCode,
       headers: response.headers,
+      contentLength: responseBody.contentLength,
       isRedirect: response.isRedirect,
       persistentConnection: response.persistentConnection,
       reasonPhrase: response.reasonPhrase,
+      request: response.request,
     );
   } catch (e) {
     final endTime = DateTime.now();
     final duration = endTime.difference(startTime);
-    ref.read(loggerProvider.notifier).addApiLog(
-          heading: &#39;[${request.method}] ${request.url} (ERROR)&#39;,
-          content: e.toString(),
-          method: request.method,
-          url: request.url.toString(),
-          headers: request.headers,
-          body: requestBody,
-          statusCode: null,
-          timings: duration,
-          memoryUsage: null,
-        );
+    _logApiCall(
+      heading: &#39;[${request.method}] ${request.url}&#39;,
+      content: e.toString(),
+      method: request.method,
+      url: request.url.toString(),
+      headers: request.headers,
+      body: requestBody,
+      statusCode: null,
+      timings: duration,
+    );
     rethrow;
   }
 }</code></pre>
@@ -158,7 +157,7 @@ Future&lt;http.StreamedResponse&gt; send(http.BaseRequest request) async {
 <footer>
   <span class="no-break">
     logitx
-      1.0.0
+      1.0.3
   </span>
   
 </footer>

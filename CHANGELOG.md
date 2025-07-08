@@ -1,3 +1,6 @@
+## 1.0.3
+- Remove the WidgetRef reference and use the container.
+
 ## 1.0.2
  - Missing info added
 

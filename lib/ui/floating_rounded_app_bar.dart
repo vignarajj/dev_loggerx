@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 /// A floating, rounded app bar that appears elevated and visually detached from the top edge.
 ///
 /// Use this in place of a standard AppBar for a modern, floating look.
-class FloatingRoundedAppBar extends StatelessWidget implements PreferredSizeWidget {
+class FloatingRoundedAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
   final Widget? title;
   final List<Widget>? actions;
   final Widget? leading;
@@ -34,7 +35,6 @@ class FloatingRoundedAppBar extends StatelessWidget implements PreferredSizeWidg
     return SafeArea(
       child: Container(
         margin: margin,
-
         child: Material(
           elevation: 8,
           borderRadius: BorderRadius.circular(24),

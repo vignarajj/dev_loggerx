@@ -82,18 +82,19 @@ void onResponse(Response response, ResponseInterceptorHandler handler) {
       response.requestOptions.extra[&#39;devLoggerStartTime&#39;] as DateTime?;
   final endTime = DateTime.now();
   final duration = startTime != null ? endTime.difference(startTime) : null;
-  ref.read(loggerProvider.notifier).addApiLog(
-        heading:
-            &#39;[${response.requestOptions.method}] ${response.requestOptions.uri}&#39;,
-        content: response.data.toString(),
-        method: response.requestOptions.method,
-        url: response.requestOptions.uri.toString(),
-        headers: response.requestOptions.headers,
-        body: response.requestOptions.data,
-        statusCode: response.statusCode,
-        timings: duration,
-        memoryUsage: null,
-      );
+
+  _logApiResponse(
+    heading:
+        &#39;[${response.requestOptions.method}] ${response.requestOptions.uri}&#39;,
+    content: response.data.toString(),
+    method: response.requestOptions.method,
+    url: response.requestOptions.uri.toString(),
+    headers: response.requestOptions.headers,
+    body: response.requestOptions.data,
+    statusCode: response.statusCode,
+    timings: duration,
+  );
+
   super.onResponse(response, handler);
 }</code></pre>
 </section>
@@ -123,7 +124,7 @@ void onResponse(Response response, ResponseInterceptorHandler handler) {
 <footer>
   <span class="no-break">
     logitx
-      1.0.0
+      1.0.3
   </span>
   
 </footer>

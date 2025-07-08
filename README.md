@@ -54,13 +54,18 @@ void main() {
 }
 ```
 
-### 3. Attach Logger Overlay
+### 3. Initialize the Provider Container
 ```dart
-@override
-void initState() {
-  super.initState();
-  Logit.attachOverlay(context);
-}
+WidgetsBinding.instance.addPostFrameCallback((_) {
+      LogitCore.attachLongPress(context, userId: 'test@dev.com');
+      // Initialize provider container for API logging
+      if (LogitCore.container == null) {
+        final container = ProviderScope.containerOf(context);
+        LogitCore.initializeProviderContainer(container);
+        // Also initialize LoggerDio's container
+        LoggerDio.initializeProviderContainer(container);
+      }
+    });
 ```
 
 ### 4. Log Messages
@@ -68,6 +73,64 @@ void initState() {
 Logit.debug('Debug message');
 Logit.api('GET', 'https://api.example.com', headers: {}, body: {}, statusCode: 200);
 Logit.log('General log message');
+```
+
+### 5. Dio Integration
+```dart
+final dio = Dio();
+dio.interceptors.add(LoggerDio());  // Add the logger interceptor
+
+// All API calls will be automatically logged
+final response = await dio.get('https://api.example.com/data');
+```
+
+## Testing
+The plugin includes comprehensive test coverage for all logging functionality:
+
+### Unit Tests
+```dart
+void main() {
+  test('should log API call', () {
+    // Initialize logger for testing
+    Logit.init(const LoggerConfig(
+      enableInDebug: true,
+      enablePersistence: false,
+    ));
+
+    // Perform logging
+    Logit.api(
+      heading: 'Test API',
+      content: 'Response data',
+      method: 'GET',
+      url: 'https://api.test.com',
+      headers: {},
+    );
+
+    // Assert logs were created
+    final logs = LogitCore.instance.logs;
+    expect(logs.length, 1);
+    expect(logs.first.heading, 'Test API');
+  });
+}
+```
+
+### Testing with Dio Interceptor
+The `LoggerDio` interceptor can be tested independently:
+
+```dart
+test('should log Dio API calls', () {
+  final loggerDio = LoggerDio();
+  final requestOptions = RequestOptions(
+    path: '/test',
+    method: 'GET',
+  );
+  
+  // Test request logging
+  loggerDio.onRequest(requestOptions, RequestInterceptorHandler());
+  
+  // Verify timing information is added
+  expect(requestOptions.extra['devLoggerStartTime'], isA<DateTime>());
+});
 ```
 
 ## Screenshots

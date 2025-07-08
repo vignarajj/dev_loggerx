@@ -385,8 +385,8 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
         textTheme: ThemeData.dark().textTheme.apply(
-          fontFamily: 'RobotoMono', // Use a monospaced font
-        ),
+              fontFamily: 'RobotoMono', // Use a monospaced font
+            ),
       ),
       scaffoldMessengerKey: _scaffoldMessengerKey,
       navigatorKey: _overlayNavigatorKey,
@@ -431,7 +431,10 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
                                 ),
                                 Text(
                                   '${_searchMatches.isEmpty ? 0 : _searchIndex + 1}/${_searchMatches.length}',
-                                  style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.arrow_downward,
@@ -443,12 +446,13 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
                         ],
                       )
                     : Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
-                      child: const Text(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: const Text(
                           'LOGITX',
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
                         ),
-                    ),
+                      ),
                 actions: [
                   if (!_showSearch)
                     IconButton(
@@ -486,7 +490,8 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
               // Debug filter row
               if (_selectedIndex == 1)
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: _debugFilters.map((filter) {
@@ -506,7 +511,8 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
                           color = Colors.grey;
                       }
                       return ChoiceChip(
-                        label: Text(filter, style: TextStyle(fontFamily: 'RobotoMono')),
+                        label: Text(filter,
+                            style: TextStyle(fontFamily: 'RobotoMono')),
                         selected: selected,
                         selectedColor: color.withAlpha(2),
                         backgroundColor: Colors.grey[850],
