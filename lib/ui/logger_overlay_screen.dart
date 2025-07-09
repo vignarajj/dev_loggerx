@@ -84,7 +84,8 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
     if (!mounted) return;
 
     final isAtTop = controller.position.pixels <= 0;
-    final isAtBottom = controller.position.pixels >= controller.position.maxScrollExtent - 50;
+    final isAtBottom =
+        controller.position.pixels >= controller.position.maxScrollExtent - 50;
 
     if (_isAtTop != isAtTop || _isAtBottom != isAtBottom) {
       setState(() {
@@ -96,7 +97,8 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
 
   /// Scroll to top of current tab
   void _scrollToTop() {
-    if (_scrollControllers.isNotEmpty && _selectedIndex < _scrollControllers.length) {
+    if (_scrollControllers.isNotEmpty &&
+        _selectedIndex < _scrollControllers.length) {
       _scrollControllers[_selectedIndex].animateTo(
         0,
         duration: const Duration(milliseconds: 500),
@@ -107,7 +109,8 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
 
   /// Scroll to bottom of current tab
   void _scrollToBottom() {
-    if (_scrollControllers.isNotEmpty && _selectedIndex < _scrollControllers.length) {
+    if (_scrollControllers.isNotEmpty &&
+        _selectedIndex < _scrollControllers.length) {
       _scrollControllers[_selectedIndex].animateTo(
         _scrollControllers[_selectedIndex].position.maxScrollExtent,
         duration: const Duration(milliseconds: 500),
@@ -396,7 +399,6 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     final logs = ref.watch(loggerProvider);
@@ -630,7 +632,9 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
                   foregroundColor: Colors.black,
                   mini: true,
                   child: Icon(
-                    _isAtBottom ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                    _isAtBottom
+                        ? Icons.keyboard_arrow_up
+                        : Icons.keyboard_arrow_down,
                     size: 20,
                   ),
                   tooltip: _isAtBottom ? 'Scroll to top' : 'Scroll to bottom',
