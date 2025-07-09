@@ -52,10 +52,68 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
   String _debugFilter = 'All';
   final List<String> _debugFilters = ['All', 'Info', 'Warning', 'Error'];
 
+  // Scroll controllers for each tab
+  final List<ScrollController> _scrollControllers = [];
+  bool _isAtTop = true;
+  bool _isAtBottom = false;
+
   @override
   void initState() {
     super.initState();
     registerTimeagoLocale();
+
+    // Initialize scroll controllers for each tab
+    for (int i = 0; i < _tabs.length; i++) {
+      final controller = ScrollController();
+      controller.addListener(() => _updateScrollPosition(controller));
+      _scrollControllers.add(controller);
+    }
+  }
+
+  @override
+  void dispose() {
+    for (final controller in _scrollControllers) {
+      controller.dispose();
+    }
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  /// Update scroll position state based on current scroll position
+  void _updateScrollPosition(ScrollController controller) {
+    if (!mounted) return;
+
+    final isAtTop = controller.position.pixels <= 0;
+    final isAtBottom = controller.position.pixels >= controller.position.maxScrollExtent - 50;
+
+    if (_isAtTop != isAtTop || _isAtBottom != isAtBottom) {
+      setState(() {
+        _isAtTop = isAtTop;
+        _isAtBottom = isAtBottom;
+      });
+    }
+  }
+
+  /// Scroll to top of current tab
+  void _scrollToTop() {
+    if (_scrollControllers.isNotEmpty && _selectedIndex < _scrollControllers.length) {
+      _scrollControllers[_selectedIndex].animateTo(
+        0,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  /// Scroll to bottom of current tab
+  void _scrollToBottom() {
+    if (_scrollControllers.isNotEmpty && _selectedIndex < _scrollControllers.length) {
+      _scrollControllers[_selectedIndex].animateTo(
+        _scrollControllers[_selectedIndex].position.maxScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   /// Called when the search text changes. Updates search matches and highlights.
@@ -338,11 +396,6 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
     }
   }
 
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -553,6 +606,7 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
                       logs: filteredViews[i],
                       highlightIndices: _searchMatches,
                       highlightIndex: _searchIndex,
+                      scrollController: _scrollControllers[i],
                       onCopy: () {
                         final messenger = _scaffoldMessengerKey.currentState;
                         messenger?.showSnackBar(
@@ -569,6 +623,19 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
               ),
             ],
           ),
+          floatingActionButton: filteredViews[_selectedIndex].isNotEmpty
+              ? FloatingActionButton(
+                  onPressed: _isAtBottom ? _scrollToTop : _scrollToBottom,
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                  mini: true,
+                  child: Icon(
+                    _isAtBottom ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                    size: 20,
+                  ),
+                  tooltip: _isAtBottom ? 'Scroll to top' : 'Scroll to bottom',
+                )
+              : null,
         ),
       ),
       debugShowCheckedModeBanner: false,

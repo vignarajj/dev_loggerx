@@ -12,12 +12,14 @@ class LogListView extends StatelessWidget {
   final List<int>? highlightIndices;
   final int? highlightIndex;
   final VoidCallback? onCopy;
+  final ScrollController? scrollController;
 
   const LogListView({
     required this.logs,
     this.highlightIndices,
     this.highlightIndex,
     this.onCopy,
+    this.scrollController,
     super.key,
   });
 
@@ -30,6 +32,7 @@ class LogListView extends StatelessWidget {
       );
     }
     return ListView.builder(
+      controller: scrollController,
       itemCount: logs.length,
       itemBuilder: (context, i) {
         final log = logs[i];
