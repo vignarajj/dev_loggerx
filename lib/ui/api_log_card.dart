@@ -149,6 +149,8 @@ class ApiLogCardState extends State<ApiLogCard> {
               ),
               if (_expandedRequest)
                 _ApiSectionBody(
+                  onDoubleTap: () =>
+                      setState(() => _expandedRequest = !_expandedRequest),
                   children: [
                     _ApiDetailRow(
                         label: 'Headers', value: _prettyPrintJson(log.headers)),
@@ -165,6 +167,8 @@ class ApiLogCardState extends State<ApiLogCard> {
               ),
               if (_expandedResponse)
                 _ApiSectionBody(
+                  onDoubleTap: () =>
+                      setState(() => _expandedResponse = !_expandedResponse),
                   children: [
                     _ApiDetailRow(
                         label: 'Headers', value: _prettyPrintJson(log.headers)),
@@ -182,6 +186,8 @@ class ApiLogCardState extends State<ApiLogCard> {
                 ),
                 if (_expandedError)
                   _ApiSectionBody(
+                    onDoubleTap: () =>
+                        setState(() => _expandedError = !_expandedError),
                     children: [
                       _ApiDetailRow(label: 'Error', value: log.content),
                     ],
@@ -263,21 +269,25 @@ class _SectionHeader extends StatelessWidget {
 
 class _ApiSectionBody extends StatelessWidget {
   final List<Widget> children;
-  const _ApiSectionBody({required this.children});
+  final VoidCallback? onDoubleTap;
+  const _ApiSectionBody({required this.children, required this.onDoubleTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      decoration: BoxDecoration(
-        color: Colors.black.withAlpha(30),
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: children,
+    return GestureDetector(
+      onDoubleTap: onDoubleTap,
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.only(bottom: 8),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        decoration: BoxDecoration(
+          color: Colors.black.withAlpha(30),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: children,
+        ),
       ),
     );
   }
@@ -312,15 +322,13 @@ class _ApiDetailRow extends StatelessWidget {
               color: Colors.grey[850],
               borderRadius: BorderRadius.circular(4),
             ),
-            child: SelectableText(
+            child: Text(
               value,
               style: const TextStyle(
                 color: Colors.white,
                 fontFamily: 'RobotoMono',
                 fontSize: 12,
               ),
-              maxLines: 16,
-              scrollPhysics: const BouncingScrollPhysics(),
             ),
           ),
         ],

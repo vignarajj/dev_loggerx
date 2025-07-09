@@ -294,6 +294,8 @@ Widget build(BuildContext context) {
             ),
             if (_expandedRequest)
               _ApiSectionBody(
+                onDoubleTap: () =&gt;
+                    setState(() =&gt; _expandedRequest = !_expandedRequest),
                 children: [
                   _ApiDetailRow(
                       label: &#39;Headers&#39;, value: _prettyPrintJson(log.headers)),
@@ -310,6 +312,8 @@ Widget build(BuildContext context) {
             ),
             if (_expandedResponse)
               _ApiSectionBody(
+                onDoubleTap: () =&gt;
+                    setState(() =&gt; _expandedResponse = !_expandedResponse),
                 children: [
                   _ApiDetailRow(
                       label: &#39;Headers&#39;, value: _prettyPrintJson(log.headers)),
@@ -327,6 +331,8 @@ Widget build(BuildContext context) {
               ),
               if (_expandedError)
                 _ApiSectionBody(
+                  onDoubleTap: () =&gt;
+                      setState(() =&gt; _expandedError = !_expandedError),
                   children: [
                     _ApiDetailRow(label: &#39;Error&#39;, value: log.content),
                   ],
@@ -365,7 +371,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     logitx
-      1.0.3
+      1.0.4
   </span>
   
 </footer>

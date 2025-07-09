@@ -4,23 +4,23 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logitx/logit.dart';
 import 'package:logitx/models/api_log_model.dart';
 import 'package:logitx/models/debug_log_model.dart';
 import 'package:logitx/models/dev_log_model.dart';
 import 'package:logitx/models/log_enums.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import 'floating_rounded_app_bar.dart';
 import 'log_list_view.dart';
 import 'seconds_ago_messages.dart';
 import 'segmented_tab_bar.dart';
 import 'settings_detail_page.dart';
-import 'floating_rounded_app_bar.dart';
 
 /// Overlay screen for viewing, searching, and filtering logs in-app.
 ///
@@ -479,6 +479,21 @@ class _LoggerOverlayScreenState extends ConsumerState<LoggerOverlayScreen> {
                     onPressed: () => _showSettingsPage(context),
                     tooltip: 'Settings',
                   ),
+                  IconButton(
+                    onPressed: () {
+                      final nav = _overlayNavigatorKey.currentState;
+                      if (nav != null && nav.canPop()) {
+                        nav.pop();
+                      } else {
+                        LogitCore.hideOverlay();
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.logout_rounded,
+                      color: Colors.red,
+                    ),
+                    tooltip: 'Exit',
+                  )
                 ],
               ),
               const SizedBox(height: 8),

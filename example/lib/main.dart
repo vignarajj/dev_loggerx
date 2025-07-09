@@ -133,7 +133,7 @@ class MyHomePage extends ConsumerWidget {
               final client = Logit.wrapHttp();
               try {
                 await client.get(
-                  Uri.parse('https://jsonplaceholder.typicode.com/posts/2'),
+                  Uri.parse('https://jsonplaceholder.typicode.com/posts'),
                 );
               } catch (_) {}
             },
